@@ -283,6 +283,33 @@ def store(reg1,var):
     print(opcode+r1+address)
 
 
+"""
+type E instructions
+"""
+def jmp(var):
+    opcode = OPcodeTable["jmp"][0]
+    unused = "00000"
+    address = bin(var)[2::].zfill(8)
+    print(opcode+unused+address)
+
+def jlt(var):
+    opcode = OPcodeTable["jlt"][0]
+    unused = "00000"
+    address = bin(var)[2::].zfill(8)
+    print(opcode+unused+address)
+
+def jgt(var):
+    opcode = OPcodeTable["jgt"][0]
+    unused = "00000"
+    address = bin(var)[2::].zfill(8)
+    print(opcode+unused+address)
+
+def je(var):
+    opcode = OPcodeTable["je"][0]
+    unused = "00000"
+    address = bin(var)[2::].zfill(8)
+    print(opcode+unused+address)
+
 
 
 
@@ -419,6 +446,18 @@ for commandList in mainList:
                 store(commandList[1+labelCorrect],
                 varDict[commandList[2+labelCorrect]])
 
+            # type E instructions are implemented below
+            elif(OPname == "jmp"):
+                jmp(varDict(commandList[1+labelCorrect]))
+
+            elif(OPname == "jlt"):
+                jlt(varDict(commandList[1+labelCorrect]))
+
+            elif(OPname == "jgt"):
+                jgt(varDict(commandList[1+labelCorrect]))
+                
+            elif(OPname == "je"):
+                je(varDict(commandList[1+labelCorrect]))
 
 
         else:
