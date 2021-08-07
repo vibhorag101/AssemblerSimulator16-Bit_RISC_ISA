@@ -1,6 +1,10 @@
 # CO assignment by Vibhor Agarwal, Tejdeep Chippa and Pranav Bhaskar
 # Description: This program is a simple 16bit assembler.
 
+"""
+Initialization of the assembler componenets
+"""
+
 RegisterTable = {"R0":"000",
     "R1":"001",
     "R2":"010",
@@ -30,4 +34,55 @@ OPcodeTable ={
     "jgt":("10001","E"),
     "je":("10010","E"),
     "hlt":("10011","F")}
+
+"""
+Flag Register Properties
+"""
+"""
+Flag[0] = equal flag
+Flag[1] = greater than flag
+Flag[2] = less than flag
+Flag[3] = overflow flag
+"""
+FLAG =[0,0,0,0]
+
+#Following function intialise the Flag register to initial value 0
+def InitialiseFlag(FLAG):
+    FLAG[0] = 0
+    FLAG[1] = 0
+    FLAG[2] = 0
+    FLAG[3] = 0
+
+
+"""
+use the following functions to set
+the value of flag register
+"""
+def setEqualFlag(FLAG,val):
+    FLAG[0] = val
+
+def setGreaterFlag(FLAG,val):
+    FLAG[1] = val
+
+def setLessFlag(FLAG,val):
+    FLAG[2] = val
+
+def setOverflowFlag(FLAG,val):
+    FLAG[3] = val
+
+"""
+use the following functions to get the
+value of the flag registers
+"""
+def getEqualFlag(FLAG):
+    return(FLAG[0])
+
+def getGreaterFlag(FLAG):
+    return(FLAG[1])
+
+def getLessFlag(FLAG):
+    return(FLAG[2])
+
+def getOverflowFlag(FLAG):
+    return(FLAG[3])
 
