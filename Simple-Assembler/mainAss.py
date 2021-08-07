@@ -167,7 +167,6 @@ while(commandInput != "hlt"):
 
         if(OPname in OPcodeTable):
             # logic if the command is valid is implemented below
-            commandInput=input()
             instructionCheck= OPcodeTable[OPname][0]
             # if opname is move then perform required check
             if(OPname != "mov"):
@@ -175,7 +174,12 @@ while(commandInput != "hlt"):
 
             else:
                 # since mov has two data types, we need to check which it is referring to
-                #             
+                if(commandList[-1][0] == "$"):
+                    insType= "B"
+                else:
+                    insType= "C"
+
+            commandInput=input()
 
         else:
             # if the command is invalid then print the error message
