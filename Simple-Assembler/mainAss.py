@@ -280,6 +280,6 @@ while(commandInput != "hlt"):
             commandInput=input()
             continue
 
-
+print("1001100000000000")
     
 
