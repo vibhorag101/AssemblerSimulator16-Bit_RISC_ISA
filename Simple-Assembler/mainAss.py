@@ -6,13 +6,13 @@ Initialization of the assembler componenets
 """
 
 RegisterTable = {
-    "reg0":"000",
-    "reg1":"001",
-    "reg2":"010",
-    "reg3":"011",
-    "reg4":"100",
-    "reg5":"101",
-    "reg6":"110",
+    "R0":"000",
+    "R1":"001",
+    "R2":"010",
+    "R3":"011",
+    "R4":"100",
+    "R5":"101",
+    "R6":"110",
     "FLAGS": "111"}
 
 OPcodeTable ={
@@ -46,21 +46,21 @@ binaryEncoding ={
     "commandSize": 4,
     "opcode":5 ,
     "unused": 2 ,
-    "reg1":3 ,
-    "reg2":3 ,
-    "reg3":3 },
+    "R1":3 ,
+    "R2":3 ,
+    "R3":3 },
 "B":{
     "commandSize": 3,
     "opcode":5 ,
-    "reg1":3 ,
+    "R1":3 ,
     "immediate":8 },
 
 "C":{
     "commandSize": 3,
     "opcode":5 ,
     "unused": 5 ,
-    "reg1":3 ,
-    "reg2":3 ,
+    "R1":3 ,
+    "R2":3 ,
     },
 
 "D":{
@@ -134,6 +134,63 @@ def getOverflowFlag(FLAG):
 
 
 """
+Type A functions are implemented here
+"""
+def add(reg1,reg2,reg3):
+    opcode=OPcodeTable["add"][0]
+    unused="00"
+    r1= RegisterTable[reg1]
+    r2= RegisterTable[reg2]
+    r3= RegisterTable[reg3]
+    print(opcode+unused+r1+r2+r3)
+
+def sub(reg1,reg2,reg3):
+    opcode=OPcodeTable["sub"][0]
+    unused="00"
+    r1= RegisterTable[reg1]
+    r2= RegisterTable[reg2]
+    r3= RegisterTable[reg3]
+    print(opcode+unused+r1+r2+r3)
+
+
+def mul(reg1,reg2,reg3):
+    opcode=OPcodeTable["mul"][0]
+    unused="00"
+    r1= RegisterTable[reg1]
+    r2= RegisterTable[reg2]
+    r3= RegisterTable[reg3]
+    print(opcode+unused+r1+r2+r3)
+
+
+def xor(reg1,reg2,reg3):
+    opcode=OPcodeTable["xor"][0]
+    unused="00"
+    r1= RegisterTable[reg1]
+    r2= RegisterTable[reg2]
+    r3= RegisterTable[reg3]
+    print(opcode+unused+r1+r2+r3)
+
+def doOR(reg1,reg2,reg3):
+    opcode=OPcodeTable["or"][0]
+    unused="00"
+    r1= RegisterTable[reg1]
+    r2= RegisterTable[reg2]
+    r3= RegisterTable[reg3]
+    print(opcode+unused+r1+r2+r3)
+
+def doAnd(reg1,reg2,reg3):
+    opcode=OPcodeTable["and"][0]
+    unused="00"
+    r1= RegisterTable[reg1]
+    r2= RegisterTable[reg2]
+    r3= RegisterTable[reg3]
+    print(opcode+unused+r1+r2+r3)
+
+
+
+
+
+"""
 some general variable required for the code flow are implemented below
 """
 # counter counts the number of non empty lines executed so far
@@ -149,19 +206,18 @@ the whole logic would be put in this while loop
 commandInput = input()
 while(commandInput != "hlt"):
     # if blank line is entered then continue further
+    
+    
     if(commandInput==""):
         commandInput=input()
         continue
 
     else:
         lineCounter = lineCounter + 1
-
         commandList = commandInput.split()
-
-        """
-        the whole logic would be below
-        """
-
+        # below checks the label
+        label = False
+        labelCorrect=0
         """
         below code handles the case for labels
         """
@@ -169,7 +225,15 @@ while(commandInput != "hlt"):
             OPname = commandList[0]
         else:
             OPname= commandList[1]
+            label = True
+            labelCorrect=1
+        
 
+        
+
+        """
+        the whole logic would be below
+        """
         # Check whether the command is valid or not
 
         if(OPname in OPcodeTable):
@@ -177,8 +241,27 @@ while(commandInput != "hlt"):
             instructionCheck= OPcodeTable[OPname][0]
             # if opname is move then perform required check
             if(OPname != "mov"):
-                insType= OPname[-1]
+                insType= OPcodeTable[OPname][-1]
+                #REVIEW possible error for var
+                #TODO add the type specific length check
+
                 # code for operations other than mov is implemented below
+                """
+                the following are the type A operations
+                """
+                if(OPname=="add"):
+                    add(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
+                elif(OPname=="sub"):
+                    sub(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
+                elif(OPname=="mul"):
+                    mul(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
+                elif(OPname=="xor"):
+                    xor(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
+                elif(OPname=="or"):
+                    doOR(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
+                elif(OPname=="and"):
+                    doAnd(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
+
 
 
 
