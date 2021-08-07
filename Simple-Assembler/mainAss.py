@@ -235,6 +235,43 @@ def ls(reg1, imm):
 
 
 """
+type C instructions
+"""
+
+def moveC(reg1, reg2):
+    opcode= OPcodeTable["mov"][1][0]
+    r1 = RegisterTable[reg1]
+    r2 = RegisterTable[reg2]
+    unused= "00000"
+    print(opcode+unused+r1+r2)
+
+def div(reg1,reg2):
+    opcode= OPcodeTable["div"][0]
+    r1 = RegisterTable[reg1]
+    r2 = RegisterTable[reg2]
+    unused= "00000"
+    print(opcode+unused+r1+r2)
+
+def doNot(reg1,reg2):
+    opcode= OPcodeTable["not"][0]
+    r1 = RegisterTable[reg1]
+    r2 = RegisterTable[reg2]
+    unused= "00000"
+    print(opcode+unused+r1+r2)
+
+def cmp(reg1,reg2):
+    opcode= OPcodeTable["cmp"][0]
+    r1 = RegisterTable[reg1]
+    r2 = RegisterTable[reg2]
+    unused= "00000"
+    #TODO implement the comparison logic
+    print(opcode+unused+r1+r2)
+
+
+
+
+
+"""
 some general variable required for the code flow are implemented below
 """
 # counter counts the number of non empty lines executed so far
@@ -285,6 +322,7 @@ while(commandInput != "hlt"):
                 # REVIEW possible error for var
                 # TODO add the type specific length check
                 # TODO var instructions
+                #TODO create the errors at various parts
 
                 # code for operations other than mov is implemented below
                 """
@@ -317,6 +355,24 @@ while(commandInput != "hlt"):
                 elif (OPname == "ls"):
                     ls(commandList[1+labelCorrect],
                        commandList[2+labelCorrect])
+                
+                #type C instructions are implemented below
+                elif(OPname == "div"):
+                    div(commandList[1+labelCorrect],
+                    commandList[2+labelCorrect])
+                
+                elif(OPname == "not"):
+                    doNot(commandList[1+labelCorrect],
+                    commandList[2+labelCorrect])
+                
+                elif(OPname == "cmp"):
+                    cmp(commandList[1+labelCorrect],
+                    commandList[2+labelCorrect])
+
+                
+                
+
+
 
             else:
                 # since mov has two data types, we need to check which it is referring to
@@ -326,6 +382,8 @@ while(commandInput != "hlt"):
                         commandList[2+labelCorrect])
                 else:
                     insType = "C"
+                    moveC(commandList[1+labelCorrect],
+                    [2+labelCorrect])
 
             commandInput = input()
 
