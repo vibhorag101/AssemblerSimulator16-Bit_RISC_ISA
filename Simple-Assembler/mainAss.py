@@ -5,7 +5,8 @@
 Initialization of the assembler componenets
 """
 
-RegisterTable = {"R0":"000",
+RegisterTable = {
+    "R0":"000",
     "R1":"001",
     "R2":"010",
     "R3":"011",
@@ -35,6 +36,50 @@ OPcodeTable ={
     "je":("10010","E"),
     "hlt":("10011","F"),
     "var":"variable"}
+
+
+"""
+below section contains the binary encoding tables
+"""
+binaryEncoding ={
+"A":{
+    "commandSize": 4,
+    "opcode":5 ,
+    "unused": 2 ,
+    "reg1":3 ,
+    "reg2":3 ,
+    "reg3":3 },
+"B":{
+    "commandSize": 3,
+    "opcode":5 ,
+    "reg1":3 ,
+    "immediate":8 },
+
+"C":{
+    "commandSize": 3,
+    "opcode":5 ,
+    "unused": 5 ,
+    "reg1":3 ,
+    "reg2":3 ,
+    },
+
+"D":{
+    "commandSize": 3,
+    "opcode":5 ,
+    "unused": 3 ,
+    "memoryAdress":8 },
+
+"E":{
+    "commandSize": 2,
+    "opcode":5 ,
+    "unused": 3 ,
+    "memoryAdress":8 },
+
+"var" :{
+    "commandSize": 2,
+}
+
+}
 
 """
 Flag Register Properties
@@ -87,6 +132,13 @@ def getLessFlag(FLAG):
 def getOverflowFlag(FLAG):
     return(FLAG[3])
 
+
+"""
+some general variable required for the code flow are implemented below
+"""
+# counter counts the number of non empty lines executed so far
+lineCounter = 0
+
 """
 Input Part
 In this part we take the input from the console
@@ -98,28 +150,39 @@ commandInput = input()
 while(commandInput != "hlt"):
     # if blank line is entered then continue further
     if(commandInput==""):
-        continue
-
-    commandList = commandInput.split()
-
-    """
-    the whole logic would be below
-    """
-    OPname = commandList[0]
-
-    # Check whether the command is valid or not
-
-    if(OPname in OPcodeTable):
-        # logic if the command is valid is implemented below
-        print("valid command")
-        
-
-    else:
-        # if the command is invalid then print the error message
-        print("Invalid command")
         commandInput=input()
         continue
 
+    else:
+        lineCounter = lineCounter + 1
 
-    commandInput=input()
+        commandList = commandInput.split()
+
+        """
+        the whole logic would be below
+        """
+        OPname = commandList[0]
+
+        # Check whether the command is valid or not
+
+        if(OPname in OPcodeTable):
+            # logic if the command is valid is implemented below
+            commandInput=input()
+            instructionCheck= OPcodeTable[OPname][0]
+            # if opname is move then perform required check
+            if(OPname != "mov"):
+                insType= OPname[-1]
+
+            else:
+                # since mov has two data types, we need to check which it is referring to
+                #             
+
+        else:
+            # if the command is invalid then print the error message
+            print("Invalid command")
+            commandInput=input()
+            continue
+
+
+    
 
