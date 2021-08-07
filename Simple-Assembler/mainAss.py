@@ -187,8 +187,26 @@ def doAnd(reg1,reg2,reg3):
     print(opcode+unused+r1+r2+r3)
 
 
+"""
+Type B instructions
+"""
+def mov(reg1,imm):
+    opcode= OPcodeTable["mov"][0][0]
+    r1= RegisterTable[reg1]
+    imm=bin(int(imm[1::]))[2:].zfill(8)
+    print(opcode+r1+imm)
 
+def rs(reg1,imm):
+    opcode= OPcodeTable["rs"][0][0]
+    r1= RegisterTable[reg1]
+    imm=bin(int(imm[1::]))[2:].zfill(8)
+    print(opcode+r1+imm)
 
+def ls(reg1,imm):
+    opcode= OPcodeTable["ls"][0][0]
+    r1= RegisterTable[reg1]
+    imm=bin(int(imm[1::]))[2:].zfill(8)
+    print(opcode+r1+imm)
 
 """
 some general variable required for the code flow are implemented below
@@ -244,6 +262,7 @@ while(commandInput != "hlt"):
                 insType= OPcodeTable[OPname][-1]
                 #REVIEW possible error for var
                 #TODO add the type specific length check
+                #TODO var instructions
 
                 # code for operations other than mov is implemented below
                 """
@@ -262,6 +281,14 @@ while(commandInput != "hlt"):
                 elif(OPname=="and"):
                     doAnd(commandList[1+labelCorrect],commandList[2+labelCorrect],commandList[3+labelCorrect])
 
+                # type B instructions are implemented below
+                elif (OPname=="rs"):
+                    rs(commandList[1+labelCorrect],commandList[2+labelCorrect])
+
+                elif (OPname=="ls"):
+                    ls(commandList[1+labelCorrect],commandList[2+labelCorrect])
+
+                
 
 
 
@@ -269,6 +296,7 @@ while(commandInput != "hlt"):
                 # since mov has two data types, we need to check which it is referring to
                 if(commandList[-1][0] == "$"):
                     insType= "B"
+                    mov(commandList[1+labelCorrect],commandList[2+labelCorrect])
                 else:
                     insType= "C"
 
