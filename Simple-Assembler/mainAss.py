@@ -100,7 +100,7 @@ while(commandInput != "hlt"):
     if(commandInput==""):
         continue
 
-    commandList = input.split()
+    commandList = commandInput.split()
 
     """
     the whole logic would be below
@@ -111,17 +111,14 @@ while(commandInput != "hlt"):
 
     if(OPname in OPcodeTable):
         # logic if the command is valid is implemented below
-        print()
+        print("valid command")
+        
 
     else:
         # if the command is invalid then print the error message
         print("Invalid command")
+        commandInput=input()
         continue
-
-
-
-
-
 
 
     commandInput=input()
