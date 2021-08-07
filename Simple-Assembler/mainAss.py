@@ -5,8 +5,6 @@
 Initialization of the assembler componenets
 """
 
-from os import PRIO_USER
-
 
 RegisterTable = {
     "R0": "000",
@@ -94,6 +92,7 @@ Flag[2] = less than flag
 Flag[3] = overflow flag
 """
 FLAG = [0, 0, 0, 0]
+lineCounter = 0
 
 # Following function intialise the Flag register to initial value 0
 
@@ -268,6 +267,22 @@ def cmp(reg1,reg2):
     print(opcode+unused+r1+r2)
 
 
+"""
+type D instruction
+"""
+def load(reg1,var):
+    opcode = OPcodeTable["ld"][0]
+    r1 = RegisterTable[reg1]
+    address = bin(var)[2::].zfill(8)
+    print(opcode+r1+address)
+
+def store(reg1,var):
+    opcode = OPcodeTable["st"][0]
+    r1 = RegisterTable[reg1]
+    address = bin(var)[2::].zfill(8)
+    print(opcode+r1+address)
+
+
 
 
 
@@ -275,7 +290,7 @@ def cmp(reg1,reg2):
 some general variable required for the code flow are implemented below
 """
 # counter counts the number of non empty lines executed so far
-lineCounter = 0
+
 
 """
 Input Part
@@ -297,6 +312,26 @@ while(commandInput != "hlt"):
         commandInput= input()
         continue
 lineCounter += 1
+
+"""
+following code assign the value to the variable
+"""
+varDict= {}
+for varList in mainList:
+    label = False
+    labelCorrect = 0
+    """
+    below code handles the case for labels
+    """
+    if(varList[0][-1] != ":"):
+        OPname = varList[0]
+    else:
+        OPname = varList[1]
+        labelCorrect=1
+    
+    if(OPname == "var"):
+        varDict[varList[1+labelCorrect]] = lineCounter
+        lineCounter=lineCounter+1
 
 for commandList in mainList:
     
@@ -375,8 +410,14 @@ for commandList in mainList:
                 cmp(commandList[1+labelCorrect],
                 commandList[2+labelCorrect])
 
-            
-            
+            # type D instructions are implemented below
+
+            elif(OPname == "ld"):
+                load(commandList[1+labelCorrect],
+                varDict[commandList[2+labelCorrect]])
+            elif(OPname == "st"):
+                store(commandList[1+labelCorrect],
+                varDict[commandList[2+labelCorrect]])
 
 
 
