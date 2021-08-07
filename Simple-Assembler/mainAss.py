@@ -6,13 +6,13 @@ Initialization of the assembler componenets
 """
 
 RegisterTable = {
-    "R0":"000",
-    "R1":"001",
-    "R2":"010",
-    "R3":"011",
-    "R4":"100",
-    "R5":"101",
-    "R6":"110",
+    "reg0":"000",
+    "reg1":"001",
+    "reg2":"010",
+    "reg3":"011",
+    "reg4":"100",
+    "reg5":"101",
+    "reg6":"110",
     "FLAGS": "111"}
 
 OPcodeTable ={
@@ -161,7 +161,14 @@ while(commandInput != "hlt"):
         """
         the whole logic would be below
         """
-        OPname = commandList[0]
+
+        """
+        below code handles the case for labels
+        """
+        if(commandList[0][-1]!= ":"):
+            OPname = commandList[0]
+        else:
+            OPname= commandList[1]
 
         # Check whether the command is valid or not
 
@@ -171,6 +178,9 @@ while(commandInput != "hlt"):
             # if opname is move then perform required check
             if(OPname != "mov"):
                 insType= OPname[-1]
+                # code for operations other than mov is implemented below
+
+
 
             else:
                 # since mov has two data types, we need to check which it is referring to
