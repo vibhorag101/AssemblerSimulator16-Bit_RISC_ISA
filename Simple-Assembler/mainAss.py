@@ -285,112 +285,116 @@ are ignored and the input is splitted into a list
 the whole logic would be put in this while loop
 """
 commandInput = input()
+mainList = []
 while(commandInput != "hlt"):
-    # if blank line is entered then continue further
-
-    if(commandInput == ""):
-        commandInput = input()
+    if(commandInput != ""):
+        command= commandInput.split()
+        mainList.append(command)
+        if("var" not in command):
+            lineCounter += 1
+        commandInput= input()
+    else:
+        commandInput= input()
         continue
+lineCounter += 1
+
+for commandList in mainList:
+    
+    lineCounter = lineCounter + 1
+    # below checks the label
+    label = False
+    labelCorrect = 0
+    """
+    below code handles the case for labels
+    """
+    if(commandList[0][-1] != ":"):
+        OPname = commandList[0]
+    else:
+        OPname = commandList[1]
+        label = True
+        labelCorrect = 1
+
+    """
+    the whole logic would be below
+    """
+    # Check whether the command is valid or not
+
+    if(OPname in OPcodeTable):
+        # logic if the command is valid is implemented below
+        instructionCheck = OPcodeTable[OPname][0]
+        # if opname is move then perform required check
+        if(OPname != "mov"):
+            insType = OPcodeTable[OPname][-1]
+            # REVIEW possible error for var
+            # TODO add the type specific length check
+            # TODO var instructions
+            #TODO create the errors at various parts
+
+            # code for operations other than mov is implemented below
+            """
+            the following are the type A operations
+            """
+            if(OPname == "add"):
+                add(commandList[1+labelCorrect], commandList[2 +
+                    labelCorrect], commandList[3+labelCorrect])
+            elif(OPname == "sub"):
+                sub(commandList[1+labelCorrect], commandList[2 +
+                    labelCorrect], commandList[3+labelCorrect])
+            elif(OPname == "mul"):
+                mul(commandList[1+labelCorrect], commandList[2 +
+                    labelCorrect], commandList[3+labelCorrect])
+            elif(OPname == "xor"):
+                xor(commandList[1+labelCorrect], commandList[2 +
+                    labelCorrect], commandList[3+labelCorrect])
+            elif(OPname == "or"):
+                doOR(commandList[1+labelCorrect], commandList[2 +
+                        labelCorrect], commandList[3+labelCorrect])
+            elif(OPname == "and"):
+                doAnd(commandList[1+labelCorrect], commandList[2 +
+                        labelCorrect], commandList[3+labelCorrect])
+
+            # type B instructions are implemented below
+            elif (OPname == "rs"):
+                rs(commandList[1+labelCorrect],
+                    commandList[2+labelCorrect])
+
+            elif (OPname == "ls"):
+                ls(commandList[1+labelCorrect],
+                    commandList[2+labelCorrect])
+            
+            #type C instructions are implemented below
+            elif(OPname == "div"):
+                div(commandList[1+labelCorrect],
+                commandList[2+labelCorrect])
+            
+            elif(OPname == "not"):
+                doNot(commandList[1+labelCorrect],
+                commandList[2+labelCorrect])
+            
+            elif(OPname == "cmp"):
+                cmp(commandList[1+labelCorrect],
+                commandList[2+labelCorrect])
+
+            
+            
+
+
+
+        else:
+            # since mov has two data types, we need to check which it is referring to
+            if(commandList[-1][0] == "$"):
+                insType = "B"
+                mov(commandList[1+labelCorrect],
+                    commandList[2+labelCorrect])
+            else:
+                insType = "C"
+                moveC(commandList[1+labelCorrect],
+                commandList[2+labelCorrect])
+
 
     else:
-        lineCounter = lineCounter + 1
-        commandList = commandInput.split()
-        # below checks the label
-        label = False
-        labelCorrect = 0
-        """
-        below code handles the case for labels
-        """
-        if(commandList[0][-1] != ":"):
-            OPname = commandList[0]
-        else:
-            OPname = commandList[1]
-            label = True
-            labelCorrect = 1
-
-        """
-        the whole logic would be below
-        """
-        # Check whether the command is valid or not
-
-        if(OPname in OPcodeTable):
-            # logic if the command is valid is implemented below
-            instructionCheck = OPcodeTable[OPname][0]
-            # if opname is move then perform required check
-            if(OPname != "mov"):
-                insType = OPcodeTable[OPname][-1]
-                # REVIEW possible error for var
-                # TODO add the type specific length check
-                # TODO var instructions
-                #TODO create the errors at various parts
-
-                # code for operations other than mov is implemented below
-                """
-                the following are the type A operations
-                """
-                if(OPname == "add"):
-                    add(commandList[1+labelCorrect], commandList[2 +
-                        labelCorrect], commandList[3+labelCorrect])
-                elif(OPname == "sub"):
-                    sub(commandList[1+labelCorrect], commandList[2 +
-                        labelCorrect], commandList[3+labelCorrect])
-                elif(OPname == "mul"):
-                    mul(commandList[1+labelCorrect], commandList[2 +
-                        labelCorrect], commandList[3+labelCorrect])
-                elif(OPname == "xor"):
-                    xor(commandList[1+labelCorrect], commandList[2 +
-                        labelCorrect], commandList[3+labelCorrect])
-                elif(OPname == "or"):
-                    doOR(commandList[1+labelCorrect], commandList[2 +
-                         labelCorrect], commandList[3+labelCorrect])
-                elif(OPname == "and"):
-                    doAnd(commandList[1+labelCorrect], commandList[2 +
-                          labelCorrect], commandList[3+labelCorrect])
-
-                # type B instructions are implemented below
-                elif (OPname == "rs"):
-                    rs(commandList[1+labelCorrect],
-                       commandList[2+labelCorrect])
-
-                elif (OPname == "ls"):
-                    ls(commandList[1+labelCorrect],
-                       commandList[2+labelCorrect])
-                
-                #type C instructions are implemented below
-                elif(OPname == "div"):
-                    div(commandList[1+labelCorrect],
-                    commandList[2+labelCorrect])
-                
-                elif(OPname == "not"):
-                    doNot(commandList[1+labelCorrect],
-                    commandList[2+labelCorrect])
-                
-                elif(OPname == "cmp"):
-                    cmp(commandList[1+labelCorrect],
-                    commandList[2+labelCorrect])
-
-                
-                
-
-
-
-            else:
-                # since mov has two data types, we need to check which it is referring to
-                if(commandList[-1][0] == "$"):
-                    insType = "B"
-                    mov(commandList[1+labelCorrect],
-                        commandList[2+labelCorrect])
-                else:
-                    insType = "C"
-                    moveC(commandList[1+labelCorrect],
-                    [2+labelCorrect])
-
-            commandInput = input()
-
-        else:
-            # if the command is invalid then print the error message
-            print("Invalid command")
-            commandInput = input()
-            continue
+        # if the command is invalid then print the error message
+        print("Invalid command")
+        continue
 
 print("1001100000000000")
