@@ -15,7 +15,7 @@ RegisterTable = {"R0":"000",
     "FLAGS": "111"}
 
 OPcodeTable ={
-     "add" :("00000","A") ,
+    "add" :("00000","A") ,
     "sub" :("00001","A") ,
     "mov":(("00010","B"),("00011","C")),
     "ld":("00100","D"),
@@ -33,7 +33,8 @@ OPcodeTable ={
     "jlt":("10000","E"),
     "jgt":("10001","E"),
     "je":("10010","E"),
-    "hlt":("10011","F")}
+    "hlt":("10011","F"),
+    "var":"variable"}
 
 """
 Flag Register Properties
@@ -85,4 +86,43 @@ def getLessFlag(FLAG):
 
 def getOverflowFlag(FLAG):
     return(FLAG[3])
+
+"""
+Input Part
+In this part we take the input from the console
+Since we are using split function extra white space in beginning
+are ignored and the input is splitted into a list
+the whole logic would be put in this while loop
+"""
+commandInput = input()
+while(commandInput != "hlt"):
+    # if blank line is entered then continue further
+    if(commandInput==""):
+        continue
+
+    commandList = input.split()
+
+    """
+    the whole logic would be below
+    """
+    OPname = commandList[0]
+
+    # Check whether the command is valid or not
+
+    if(OPname in OPcodeTable):
+        # logic if the command is valid is implemented below
+        print()
+
+    else:
+        # if the command is invalid then print the error message
+        print("Invalid command")
+        continue
+
+
+
+
+
+
+
+    commandInput=input()
 
