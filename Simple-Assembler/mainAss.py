@@ -385,7 +385,7 @@ some general variable required for the code flow are implemented below
 def checkArgLength(opType,commandList,label):
     checkLength = len(commandList)
     if(label == True):
-        if(checkLength+1 != binaryEncoding[opType]["commandSize"]):
+        if(checkLength != binaryEncoding[opType]["commandSize"]+1):
             print("Error: Invalid number of arguments for type",opType,"operation")
             exit()
     else:
