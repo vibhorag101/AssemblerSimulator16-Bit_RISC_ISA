@@ -104,6 +104,8 @@ def InitialiseFlag(FLAG):
     FLAG[3] = 0
 
 
+errorLineCounter=0
+
 """
 use the following functions to set
 the value of flag register
@@ -414,10 +416,20 @@ while("hlt" not in commandInput):
             lineCounter += 1
         if(command[0][-1] == ":"):
             labelDict[command[0][:-1]] = lineCounter
-        commandInput= input()
+        
+        try:
+            commandInput= input()
+        except EOFError:
+            print("hlt not present in the last line")
+            exit()
     else:
-        commandInput= input()
-        continue
+        try:
+            commandInput= input()
+            continue
+        except EOFError:
+            print("hlt not present in the last line")
+            exit()
+
 
 # test case handle if label in hlt
 command= commandInput.split()
@@ -444,7 +456,7 @@ for varList in mainList:
             OPname = varList[1]
             labelCorrect=1
         except IndexError:
-            print("Invalid number of arguments for variable")
+            print("Error in line "+str(errorLineCounter)+"Invalid number of arguments for variable")
             exit()
     
     if(OPname == "var"):
@@ -452,12 +464,12 @@ for varList in mainList:
             varDict[varList[1+labelCorrect]] = lineCounter
             lineCounter=lineCounter+1
         except IndexError:
-            print("Invalid number of arguments for variable")
+            print("Error in line "+str(errorLineCounter)+"Invalid number of arguments for variable")
             exit()
         
 #NOTE
 # below variable counts the line to give out the error line number
-errorLineCounter=0
+
 
 for commandList in mainList:
     
@@ -476,10 +488,10 @@ for commandList in mainList:
             label = True
             labelCorrect = 1
         except IndexError:
-            print("incomplete arguments after label")
+            print("Error in line "+str(errorLineCounter)+"incomplete arguments after label")
             exit()
         except:
-            print("General Syntax error")
+            print("Error in line "+str(errorLineCounter)+"General Syntax error")
             exit()
 
     """
@@ -563,7 +575,7 @@ for commandList in mainList:
                     load(commandList[1+labelCorrect],
                 varDict[commandList[2+labelCorrect]])
                 except KeyError:
-                    print("variable used without define")
+                    print("Error in line "+str(errorLineCounter)+"variable used without define")
                     exit()
             elif(OPname == "st"):
                 checkArgLength("D",commandList,label)
@@ -571,7 +583,7 @@ for commandList in mainList:
                     store(commandList[1+labelCorrect],
                     varDict[commandList[2+labelCorrect]])
                 except KeyError:
-                    print("variable used without define")
+                    print("Error in line "+str(errorLineCounter)+"variable used without define")
                     exit()
             
 
@@ -625,7 +637,7 @@ for commandList in mainList:
 
     else:
         # if the command is invalid then print the error message
-        print("Invalid command")
+        print("Error in line "+str(errorLineCounter)+"Invalid command")
         exit()
     errorLineCounter=errorLineCounter+1
 
