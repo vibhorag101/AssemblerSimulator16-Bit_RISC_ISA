@@ -161,10 +161,10 @@ def add(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error: Invalid Register")
+        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
         exit()
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
         exit()
     print(opcode+unused+r1+r2+r3)
 
@@ -177,10 +177,10 @@ def sub(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error: Invalid Register")
+        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
         exit()
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
         exit()
     
     print(opcode+unused+r1+r2+r3)
@@ -194,10 +194,10 @@ def mul(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error: Invalid Register")
+        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
         exit()
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
         exit()
     print(opcode+unused+r1+r2+r3)
 
@@ -210,10 +210,10 @@ def xor(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error: Invalid Register")
+        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
         exit()
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
         exit()
     print(opcode+unused+r1+r2+r3)
 
@@ -226,10 +226,10 @@ def doOR(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error: Invalid Register")
+        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
         exit()
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
         exit()
     print(opcode+unused+r1+r2+r3)
 
@@ -242,10 +242,10 @@ def doAnd(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error: Invalid Register")
+        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
         exit()
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
         exit()
     print(opcode+unused+r1+r2+r3)
 
@@ -338,9 +338,9 @@ def jmp(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("variable used without define")
+        print("Error in line "+str(errorLineCounter)+"variable used without define")
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
 
 def jlt(var):
     opcode = OPcodeTable["jlt"][0]
@@ -349,9 +349,9 @@ def jlt(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("variable used without define")
+        print("Error in line "+str(errorLineCounter)+"variable used without define")
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
 
 
 def jgt(var):
@@ -361,9 +361,9 @@ def jgt(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("variable used without define")
+        print("Error in line "+str(errorLineCounter)+"variable used without define")
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
 
 def je(var):
     opcode = OPcodeTable["je"][0]
@@ -372,9 +372,9 @@ def je(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("variable used without define")
+        print("Error in line "+str(errorLineCounter)+"variable used without define")
     except:
-        print("General Syntax error")
+        print("Error in line "+str(errorLineCounter)+"General Syntax error")
 
 
 
@@ -386,11 +386,11 @@ def checkArgLength(opType,commandList,label):
     checkLength = len(commandList)
     if(label == True):
         if(checkLength != binaryEncoding[opType]["commandSize"]+1):
-            print("Error: Invalid number of arguments for type",opType,"operation")
+            print("Error in line: "+errorLineCounter+" Invalid number of arguments for type",opType,"operation")
             exit()
     else:
         if(checkLength != binaryEncoding[opType]["commandSize"]):
-            print("Error: Invalid number of arguments for type",opType,"operation")
+            print("Error in line: "+str(errorLineCounter)+" Invalid number of arguments for type",opType,"operation")
             exit()
 
     
@@ -455,7 +455,9 @@ for varList in mainList:
             print("Invalid number of arguments for variable")
             exit()
         
-
+#NOTE
+# below variable counts the line to give out the error line number
+errorLineCounter=0
 
 for commandList in mainList:
     
@@ -579,28 +581,32 @@ for commandList in mainList:
                 try:
                     jmp(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("variable used without define")
+                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    exit()
 
             elif(OPname == "jlt"):
                 checkArgLength("E",commandList,label)
                 try:
                     jlt(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("variable used without define")
+                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    exit()
 
             elif(OPname == "jgt"):
                 checkArgLength("E",commandList,label)
                 try:
                     jgt(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("variable used without define")
+                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    exit()
                 
             elif(OPname == "je"):
                 checkArgLength("E",commandList,label)
                 try:
                     je(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("variable used without define")  
+                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    exit()
 
 
         else:
@@ -621,6 +627,7 @@ for commandList in mainList:
         # if the command is invalid then print the error message
         print("Invalid command")
         exit()
+    errorLineCounter=errorLineCounter+1
 
 print("1001100000000000")
 
