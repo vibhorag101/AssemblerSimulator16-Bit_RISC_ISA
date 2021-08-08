@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Add command to run your program here
-python mainAss.py
+python3 mainAss.py

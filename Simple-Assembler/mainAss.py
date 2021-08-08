@@ -6,9 +6,6 @@ Initialization of the assembler componenets
 """
 
 
-from typing import TYPE_CHECKING
-
-
 RegisterTable = {
     "R0": "000",
     "R1": "001",
@@ -293,25 +290,25 @@ type E instructions
 
 def jmp(var):
     opcode = OPcodeTable["jmp"][0]
-    unused = "00000"
+    unused = "000"
     address = bin(var)[2::].zfill(8)
     print(opcode+unused+address)
 
 def jlt(var):
     opcode = OPcodeTable["jlt"][0]
-    unused = "00000"
+    unused = "000"
     address = bin(var)[2::].zfill(8)
     print(opcode+unused+address)
 
 def jgt(var):
     opcode = OPcodeTable["jgt"][0]
-    unused = "00000"
+    unused = "000"
     address = bin(var)[2::].zfill(8)
     print(opcode+unused+address)
 
 def je(var):
     opcode = OPcodeTable["je"][0]
-    unused = "00000"
+    unused = "000"
     address = bin(var)[2::].zfill(8)
     print(opcode+unused+address)
 
