@@ -6,6 +6,9 @@ Initialization of the assembler componenets
 """
 
 
+from typing import TYPE_CHECKING
+
+
 RegisterTable = {
     "R0": "000",
     "R1": "001",
@@ -286,6 +289,8 @@ def store(reg1,var):
 """
 type E instructions
 """
+#TODO fix the branch label TYPE_CHECKING
+
 def jmp(var):
     opcode = OPcodeTable["jmp"][0]
     unused = "00000"
@@ -328,22 +333,33 @@ the whole logic would be put in this while loop
 """
 commandInput = input()
 mainList = []
-while(commandInput != "hlt"):
+labelDict= {}
+# while(commandInput != "hlt"):
+while("hlt" not in commandInput):
     if(commandInput != ""):
         command= commandInput.split()
         mainList.append(command)
         if("var" not in command):
             lineCounter += 1
+        if(command[0][-1] == ":"):
+            labelDict[command[0][:-1]] = lineCounter
         commandInput= input()
     else:
         commandInput= input()
         continue
+
+# test case handle if label in hlt
+command= commandInput.split()
+if(command[0][-1] == ":"):
+    labelDict[command[0][:-1]] = lineCounter
+
 lineCounter += 1
 
 """
 following code assign the value to the variable
 """
 varDict= {}
+varDict = labelDict.copy()
 for varList in mainList:
     label = False
     labelCorrect = 0
@@ -359,6 +375,7 @@ for varList in mainList:
     if(OPname == "var"):
         varDict[varList[1+labelCorrect]] = lineCounter
         lineCounter=lineCounter+1
+
 
 for commandList in mainList:
     
@@ -448,16 +465,16 @@ for commandList in mainList:
 
             # type E instructions are implemented below
             elif(OPname == "jmp"):
-                jmp(varDict(commandList[1+labelCorrect]))
+                jmp(varDict[commandList[1+labelCorrect]])
 
             elif(OPname == "jlt"):
-                jlt(varDict(commandList[1+labelCorrect]))
+                jlt(varDict[commandList[1+labelCorrect]])
 
             elif(OPname == "jgt"):
-                jgt(varDict(commandList[1+labelCorrect]))
+                jgt(varDict[commandList[1+labelCorrect]])
                 
             elif(OPname == "je"):
-                je(varDict(commandList[1+labelCorrect]))
+                je(varDict[commandList[1+labelCorrect]])
 
 
         else:
