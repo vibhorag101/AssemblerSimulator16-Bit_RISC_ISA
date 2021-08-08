@@ -444,12 +444,17 @@ for varList in mainList:
             OPname = varList[1]
             labelCorrect=1
         except IndexError:
-            print("incomplete arguments")
+            print("Invalid number of arguments for variable")
             exit()
     
     if(OPname == "var"):
-        varDict[varList[1+labelCorrect]] = lineCounter
-        lineCounter=lineCounter+1
+        try:
+            varDict[varList[1+labelCorrect]] = lineCounter
+            lineCounter=lineCounter+1
+        except IndexError:
+            print("Invalid number of arguments for variable")
+            exit()
+        
 
 
 for commandList in mainList:
