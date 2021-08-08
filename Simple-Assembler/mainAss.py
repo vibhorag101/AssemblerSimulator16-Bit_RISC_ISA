@@ -452,6 +452,7 @@ try:
     temp=input()
     if(temp == "hlt"):
         print("multiple halt statements")
+        exit()
     elif(temp != ""):
         print("Hlt is not the last intruction")
         exit()
