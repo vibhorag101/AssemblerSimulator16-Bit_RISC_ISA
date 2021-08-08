@@ -156,54 +156,97 @@ Type A functions are implemented here
 def add(reg1, reg2, reg3):
     opcode = OPcodeTable["add"][0]
     unused = "00"
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
-    r3 = RegisterTable[reg3]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+        r3 = RegisterTable[reg3]
+    except KeyError:
+        print("Error: Invalid Register")
+        exit()
+    except:
+        print("General Syntax error")
+        exit()
     print(opcode+unused+r1+r2+r3)
 
 
 def sub(reg1, reg2, reg3):
     opcode = OPcodeTable["sub"][0]
     unused = "00"
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
-    r3 = RegisterTable[reg3]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+        r3 = RegisterTable[reg3]
+    except KeyError:
+        print("Error: Invalid Register")
+        exit()
+    except:
+        print("General Syntax error")
+        exit()
+    
     print(opcode+unused+r1+r2+r3)
 
 
 def mul(reg1, reg2, reg3):
     opcode = OPcodeTable["mul"][0]
     unused = "00"
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
-    r3 = RegisterTable[reg3]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+        r3 = RegisterTable[reg3]
+    except KeyError:
+        print("Error: Invalid Register")
+        exit()
+    except:
+        print("General Syntax error")
+        exit()
     print(opcode+unused+r1+r2+r3)
 
 
 def xor(reg1, reg2, reg3):
     opcode = OPcodeTable["xor"][0]
     unused = "00"
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
-    r3 = RegisterTable[reg3]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+        r3 = RegisterTable[reg3]
+    except KeyError:
+        print("Error: Invalid Register")
+        exit()
+    except:
+        print("General Syntax error")
+        exit()
     print(opcode+unused+r1+r2+r3)
 
 
 def doOR(reg1, reg2, reg3):
     opcode = OPcodeTable["or"][0]
     unused = "00"
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
-    r3 = RegisterTable[reg3]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+        r3 = RegisterTable[reg3]
+    except KeyError:
+        print("Error: Invalid Register")
+        exit()
+    except:
+        print("General Syntax error")
+        exit()
     print(opcode+unused+r1+r2+r3)
 
 
 def doAnd(reg1, reg2, reg3):
     opcode = OPcodeTable["and"][0]
     unused = "00"
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
-    r3 = RegisterTable[reg3]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+        r3 = RegisterTable[reg3]
+    except KeyError:
+        print("Error: Invalid Register")
+        exit()
+    except:
+        print("General Syntax error")
+        exit()
     print(opcode+unused+r1+r2+r3)
 
 
@@ -291,27 +334,47 @@ type E instructions
 def jmp(var):
     opcode = OPcodeTable["jmp"][0]
     unused = "000"
-    address = bin(var)[2::].zfill(8)
-    print(opcode+unused+address)
+    try:
+        address = bin(var)[2::].zfill(8)
+        print(opcode+unused+address)
+    except KeyError:
+        print("variable used without define")
+    except:
+        print("General Syntax error")
 
 def jlt(var):
     opcode = OPcodeTable["jlt"][0]
     unused = "000"
-    address = bin(var)[2::].zfill(8)
-    print(opcode+unused+address)
+    try:
+        address = bin(var)[2::].zfill(8)
+        print(opcode+unused+address)
+    except KeyError:
+        print("variable used without define")
+    except:
+        print("General Syntax error")
+
 
 def jgt(var):
     opcode = OPcodeTable["jgt"][0]
     unused = "000"
-    address = bin(var)[2::].zfill(8)
-    print(opcode+unused+address)
+    try:
+        address = bin(var)[2::].zfill(8)
+        print(opcode+unused+address)
+    except KeyError:
+        print("variable used without define")
+    except:
+        print("General Syntax error")
 
 def je(var):
     opcode = OPcodeTable["je"][0]
     unused = "000"
-    address = bin(var)[2::].zfill(8)
-    print(opcode+unused+address)
-
+    try:
+        address = bin(var)[2::].zfill(8)
+        print(opcode+unused+address)
+    except KeyError:
+        print("variable used without define")
+    except:
+        print("General Syntax error")
 
 
 
@@ -454,24 +517,45 @@ for commandList in mainList:
             # type D instructions are implemented below
 
             elif(OPname == "ld"):
-                load(commandList[1+labelCorrect],
+                try:
+                    load(commandList[1+labelCorrect],
                 varDict[commandList[2+labelCorrect]])
+                except KeyError:
+                    print("variable used without define")
+                    exit()
             elif(OPname == "st"):
-                store(commandList[1+labelCorrect],
-                varDict[commandList[2+labelCorrect]])
+                try:
+                    store(commandList[1+labelCorrect],
+                    varDict[commandList[2+labelCorrect]])
+                except KeyError:
+                    print("variable used without define")
+                    exit()
+            
 
             # type E instructions are implemented below
             elif(OPname == "jmp"):
-                jmp(varDict[commandList[1+labelCorrect]])
+                try:
+                    jmp(varDict[commandList[1+labelCorrect]])
+                except KeyError:
+                    print("variable used without define")
 
             elif(OPname == "jlt"):
-                jlt(varDict[commandList[1+labelCorrect]])
+                try:
+                    jlt(varDict[commandList[1+labelCorrect]])
+                except KeyError:
+                    print("variable used without define")
 
             elif(OPname == "jgt"):
-                jgt(varDict[commandList[1+labelCorrect]])
+                try:
+                    jgt(varDict[commandList[1+labelCorrect]])
+                except KeyError:
+                    print("variable used without define")
                 
             elif(OPname == "je"):
-                je(varDict[commandList[1+labelCorrect]])
+                try:
+                    je(varDict[commandList[1+labelCorrect]])
+                except KeyError:
+                    print("variable used without define")  
 
 
         else:
