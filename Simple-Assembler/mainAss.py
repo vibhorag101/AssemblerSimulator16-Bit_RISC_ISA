@@ -438,6 +438,16 @@ if(command[0][-1] == ":"):
 
 lineCounter += 1
 
+#REVIEW
+"""
+An additional input is created
+if we have reached the end of file then an eoferror is raised which
+is catched
+But if there are pending commands after first halt then no such error
+is raised indicating halt is not the last statement
+Although when running without automated testing we need an additional enter
+"""
+
 try:
     temp=input()
     if(temp == "hlt"):
