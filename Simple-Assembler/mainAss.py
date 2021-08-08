@@ -438,6 +438,18 @@ if(command[0][-1] == ":"):
 
 lineCounter += 1
 
+try:
+    temp=input()
+    if(temp == "hlt"):
+        print("multiple halt statements")
+    elif(temp != ""):
+        print("Hlt is not the last intruction")
+        exit()
+
+except EOFError:
+    pass
+
+
 """
 following code assign the value to the variable
 """
