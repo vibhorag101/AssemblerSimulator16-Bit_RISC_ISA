@@ -381,8 +381,19 @@ def je(var):
 """
 some general variable required for the code flow are implemented below
 """
-# counter counts the number of non empty lines executed so far
+# this functions checks the argument length given
+def checkArgLength(opType,commandList,label):
+    checkLength = len(commandList)
+    if(label == True):
+        if(checkLength+1 != binaryEncoding[opType]["commandSize"]):
+            print("Error: Invalid number of arguments for type",opType,"operation")
+            exit()
+    else:
+        if(checkLength != binaryEncoding[opType]["commandSize"]):
+            print("Error: Invalid number of arguments for type",opType,"operation")
+            exit()
 
+    
 
 """
 Input Part
@@ -429,8 +440,12 @@ for varList in mainList:
     if(varList[0][-1] != ":"):
         OPname = varList[0]
     else:
-        OPname = varList[1]
-        labelCorrect=1
+        try:
+            OPname = varList[1]
+            labelCorrect=1
+        except IndexError:
+            print("incomplete arguments")
+            exit()
     
     if(OPname == "var"):
         varDict[varList[1+labelCorrect]] = lineCounter
@@ -449,9 +464,16 @@ for commandList in mainList:
     if(commandList[0][-1] != ":"):
         OPname = commandList[0]
     else:
-        OPname = commandList[1]
-        label = True
-        labelCorrect = 1
+        try:
+            OPname = commandList[1]
+            label = True
+            labelCorrect = 1
+        except IndexError:
+            print("incomplete arguments after label")
+            exit()
+        except:
+            print("General Syntax error")
+            exit()
 
     """
     the whole logic would be below
@@ -473,50 +495,63 @@ for commandList in mainList:
             """
             the following are the type A operations
             """
+            
             if(OPname == "add"):
+                checkArgLength("A",commandList,label)
                 add(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "sub"):
+                checkArgLength("A",commandList,label)
                 sub(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "mul"):
+                checkArgLength("A",commandList,label)
                 mul(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "xor"):
+                checkArgLength("A",commandList,label)
                 xor(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "or"):
+                checkArgLength("A",commandList,label)
                 doOR(commandList[1+labelCorrect], commandList[2 +
                         labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "and"):
+                checkArgLength("A",commandList,label)
                 doAnd(commandList[1+labelCorrect], commandList[2 +
                         labelCorrect], commandList[3+labelCorrect])
 
             # type B instructions are implemented below
             elif (OPname == "rs"):
+                checkArgLength("B",commandList,label)
                 rs(commandList[1+labelCorrect],
                     commandList[2+labelCorrect])
 
             elif (OPname == "ls"):
+                checkArgLength("B",commandList,label)
                 ls(commandList[1+labelCorrect],
                     commandList[2+labelCorrect])
             
             #type C instructions are implemented below
             elif(OPname == "div"):
+                checkArgLength("C",commandList,label)
                 div(commandList[1+labelCorrect],
                 commandList[2+labelCorrect])
             
             elif(OPname == "not"):
+                checkArgLength("C",commandList,label)
                 doNot(commandList[1+labelCorrect],
                 commandList[2+labelCorrect])
             
             elif(OPname == "cmp"):
+                checkArgLength("C",commandList,label)
                 cmp(commandList[1+labelCorrect],
                 commandList[2+labelCorrect])
 
             # type D instructions are implemented below
 
             elif(OPname == "ld"):
+                checkArgLength("D",commandList,label)
                 try:
                     load(commandList[1+labelCorrect],
                 varDict[commandList[2+labelCorrect]])
@@ -524,6 +559,7 @@ for commandList in mainList:
                     print("variable used without define")
                     exit()
             elif(OPname == "st"):
+                checkArgLength("D",commandList,label)
                 try:
                     store(commandList[1+labelCorrect],
                     varDict[commandList[2+labelCorrect]])
@@ -534,24 +570,28 @@ for commandList in mainList:
 
             # type E instructions are implemented below
             elif(OPname == "jmp"):
+                checkArgLength("E",commandList,label)
                 try:
                     jmp(varDict[commandList[1+labelCorrect]])
                 except KeyError:
                     print("variable used without define")
 
             elif(OPname == "jlt"):
+                checkArgLength("E",commandList,label)
                 try:
                     jlt(varDict[commandList[1+labelCorrect]])
                 except KeyError:
                     print("variable used without define")
 
             elif(OPname == "jgt"):
+                checkArgLength("E",commandList,label)
                 try:
                     jgt(varDict[commandList[1+labelCorrect]])
                 except KeyError:
                     print("variable used without define")
                 
             elif(OPname == "je"):
+                checkArgLength("E",commandList,label)
                 try:
                     je(varDict[commandList[1+labelCorrect]])
                 except KeyError:
@@ -562,10 +602,12 @@ for commandList in mainList:
             # since mov has two data types, we need to check which it is referring to
             if(commandList[-1][0] == "$"):
                 insType = "B"
+                checkArgLength(insType,commandList,label)
                 mov(commandList[1+labelCorrect],
                     commandList[2+labelCorrect])
             else:
                 insType = "C"
+                checkArgLength(insType,commandList,label)
                 moveC(commandList[1+labelCorrect],
                 commandList[2+labelCorrect])
 
@@ -573,6 +615,8 @@ for commandList in mainList:
     else:
         # if the command is invalid then print the error message
         print("Invalid command")
-        continue
+        exit()
 
 print("1001100000000000")
+
+#TODO error line counter
