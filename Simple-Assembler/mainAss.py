@@ -268,6 +268,9 @@ Type B instructions
 def mov(reg1, imm):
     opcode = OPcodeTable["mov"][0][0]
     r1 = RegisterTable[reg1]
+    if(int(imm[1::]) > 255 or int(imm[1::]) < 0):
+        print("Error in line "+str(errorLineCounter) + " Immediate not in range 0 to 255")
+        exit()
     try:
         imm = bin(int(imm[1::]))[2:].zfill(8)
     except NameError:
@@ -283,6 +286,9 @@ def mov(reg1, imm):
 def rs(reg1, imm):
     opcode = OPcodeTable["rs"][0][0]
     r1 = RegisterTable[reg1]
+    if(int(imm[1::]) > 255 or int(imm[1::]) < 0):
+        print("Error in line "+str(errorLineCounter) + " Immediate not in range 0 to 255")
+        exit()
     try:
         imm = bin(int(imm[1::]))[2:].zfill(8)
     except NameError:
@@ -297,6 +303,9 @@ def rs(reg1, imm):
 def ls(reg1, imm):
     opcode = OPcodeTable["ls"][0][0]
     r1 = RegisterTable[reg1]
+    if(int(imm[1::]) > 255 or int(imm[1::]) < 0):
+        print("Error in line "+str(errorLineCounter) + " Immediate not in range 0 to 255")
+        exit()
     try:
         imm = bin(int(imm[1::]))[2:].zfill(8)
     except NameError:
