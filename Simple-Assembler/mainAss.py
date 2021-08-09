@@ -482,6 +482,9 @@ try:
 except EOFError:
     pass
 
+if(lineCounter >255):
+    print("instruction count exceeds 256")
+    exit()
 
 """
 following code assign the value to the variable
