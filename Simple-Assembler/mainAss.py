@@ -482,7 +482,7 @@ try:
 except EOFError:
     pass
 
-if(lineCounter >255):
+if(lineCounter >256):
     print("instruction count exceeds 256")
     exit()
 
