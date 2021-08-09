@@ -511,8 +511,12 @@ for varList in mainList:
     
     if(OPname == "var"):
         try:
-            varDict[varList[1+labelCorrect]] = lineCounter
-            lineCounter=lineCounter+1
+            try:
+                varDict[varList[1+labelCorrect]] = lineCounter
+                print("multiple variable of "+varList[1+labelCorrect]+" not allowed")
+                exit()
+            except KeyError:
+                lineCounter=lineCounter+1
         except IndexError:
             print("Error in line "+str(varErrorCounter)+" Invalid number of arguments for variable")
             exit()
