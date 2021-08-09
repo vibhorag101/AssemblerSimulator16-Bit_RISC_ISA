@@ -260,21 +260,43 @@ Type B instructions
 def mov(reg1, imm):
     opcode = OPcodeTable["mov"][0][0]
     r1 = RegisterTable[reg1]
-    imm = bin(int(imm[1::]))[2:].zfill(8)
+    try:
+        imm = bin(int(imm[1::]))[2:].zfill(8)
+    except NameError:
+        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        exit()
+    except ValueError:
+        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        exit()
+
     print(opcode+r1+imm)
 
 
 def rs(reg1, imm):
     opcode = OPcodeTable["rs"][0][0]
     r1 = RegisterTable[reg1]
-    imm = bin(int(imm[1::]))[2:].zfill(8)
+    try:
+        imm = bin(int(imm[1::]))[2:].zfill(8)
+    except NameError:
+        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        exit()
+    except ValueError:
+        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        exit()
     print(opcode+r1+imm)
 
 
 def ls(reg1, imm):
     opcode = OPcodeTable["ls"][0][0]
     r1 = RegisterTable[reg1]
-    imm = bin(int(imm[1::]))[2:].zfill(8)
+    try:
+        imm = bin(int(imm[1::]))[2:].zfill(8)
+    except NameError:
+        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        exit()
+    except ValueError:
+        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        exit()
     print(opcode+r1+imm)
 
 
@@ -466,6 +488,7 @@ following code assign the value to the variable
 """
 varDict= {}
 varDict = labelDict.copy()
+varErrorCounter=0
 for varList in mainList:
     label = False
     labelCorrect = 0
@@ -477,9 +500,10 @@ for varList in mainList:
     else:
         try:
             OPname = varList[1]
+
             labelCorrect=1
         except IndexError:
-            print("Error in line "+str(errorLineCounter)+" Invalid number of arguments for variable")
+            print("Error in line "+str(varErrorCounter)+" Invalid number of arguments for label or variable")
             exit()
     
     if(OPname == "var"):
@@ -487,9 +511,9 @@ for varList in mainList:
             varDict[varList[1+labelCorrect]] = lineCounter
             lineCounter=lineCounter+1
         except IndexError:
-            print("Error in line "+str(errorLineCounter)+" Invalid number of arguments for variable")
+            print("Error in line "+str(varErrorCounter)+" Invalid number of arguments for variable")
             exit()
-        
+    varErrorCounter=varErrorCounter+1
 #NOTE
 # below variable counts the line to give out the error line number
 
@@ -660,7 +684,7 @@ for commandList in mainList:
 
     else:
         # if the command is invalid then print the error message
-        print("Error in line "+str(errorLineCounter)+"Invalid command")
+        print("Error in line "+str(errorLineCounter)+" Invalid command")
         exit()
     errorLineCounter=errorLineCounter+1
 
