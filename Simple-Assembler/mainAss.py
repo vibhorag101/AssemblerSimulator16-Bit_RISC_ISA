@@ -502,6 +502,19 @@ else:
         print("Error in last line: hlt not the last command ")
         exit()
 
+"""
+below code check if variable are only defined at the beginning
+"""
+varFlag= False
+varErrorCounter=0
+for i in mainList:
+    if("var" not in i):
+        varFlag = True
+        varErrorCounter += 1
+    if(("var" in i) and varFlag):
+        print("Error in line "+str(varErrorCounter)+" variable not defined in the beginning")
+        exit()
+
 
 
 
