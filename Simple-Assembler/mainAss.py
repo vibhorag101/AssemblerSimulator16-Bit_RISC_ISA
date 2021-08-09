@@ -1,10 +1,20 @@
 # CO assignment by Vibhor Agarwal, Tejdeep Chippa and Pranav Bhaskar
 # Description: This program is a simple 16bit assembler.
-
+from sys import stdin
 """
 Initialization of the assembler componenets
 """
 
+"""all the variables are implemented below
+"""
+FLAG = [0, 0, 0, 0]
+# lineCounter used for assigning the value to the variable and count total instructions
+lineCounter = 0
+# errorLineCounter is used to tell which line is causing the error
+errorLineCounter=0
+errorFlag = False
+mainList = []
+labelDict= {}
 
 RegisterTable = {
     "R0": "000",
@@ -91,8 +101,7 @@ Flag[1] = greater than flag
 Flag[2] = less than flag
 Flag[3] = overflow flag
 """
-FLAG = [0, 0, 0, 0]
-lineCounter = 0
+
 
 # Following function intialise the Flag register to initial value 0
 
@@ -104,7 +113,7 @@ def InitialiseFlag(FLAG):
     FLAG[3] = 0
 
 
-errorLineCounter=0
+
 
 """
 use the following functions to set
@@ -426,40 +435,21 @@ Since we are using split function extra white space in beginning
 are ignored and the input is splitted into a list
 the whole logic would be put in this while loop
 """
-commandInput = input()
-mainList = []
-labelDict= {}
+
 # while(commandInput != "hlt"):
-while("hlt" not in commandInput):
+for commandInput in stdin:
     if(commandInput != ""):
+        commandInput=commandInput.strip()
+        if(commandInput==""):
+            continue
         command= commandInput.split()
         mainList.append(command)
         if("var" not in command):
+            if(command[0][-1] == ":"):
+                labelDict[command[0][:-1]] = lineCounter
             lineCounter += 1
-        if(command[0][-1] == ":"):
-            labelDict[command[0][:-1]] = lineCounter
-        
-        try:
-            commandInput= input()
-        except EOFError:
-            print("hlt not present in the last line")
-            exit()
     else:
-        try:
-            commandInput= input()
-            continue
-        except EOFError:
-            print("hlt not present in the last line")
-            exit()
-
-
-# test case handle if label in hlt
-command= commandInput.split()
-if(command[0][-1] == ":"):
-    labelDict[command[0][:-1]] = lineCounter
-
-lineCounter += 1
-
+        break
 #REVIEW
 """
 An additional input is created
@@ -469,18 +459,6 @@ But if there are pending commands after first halt then no such error
 is raised indicating halt is not the last statement
 Although when running without automated testing we need an additional enter
 """
-
-try:
-    temp=input()
-    if(temp == "hlt"):
-        print("multiple halt statements")
-        exit()
-    elif(temp != ""):
-        print("Hlt is not the last intruction")
-        exit()
-
-except EOFError:
-    pass
 
 if(lineCounter >256):
     print("instruction count exceeds 256")
