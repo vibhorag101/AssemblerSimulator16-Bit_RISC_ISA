@@ -165,6 +165,9 @@ Type A functions are implemented here
 
 def add(reg1, reg2, reg3):
     opcode = OPcodeTable["add"][0]
+    if(reg1 == "FLAGS" or reg2 == "FLAGS" or reg3 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     unused = "00"
     try:
         r1 = RegisterTable[reg1]
@@ -181,6 +184,10 @@ def add(reg1, reg2, reg3):
 
 def sub(reg1, reg2, reg3):
     opcode = OPcodeTable["sub"][0]
+    if(reg1 == "FLAGS" or reg2 == "FLAGS" or reg3 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
+
     unused = "00"
     try:
         r1 = RegisterTable[reg1]
@@ -198,6 +205,9 @@ def sub(reg1, reg2, reg3):
 
 def mul(reg1, reg2, reg3):
     opcode = OPcodeTable["mul"][0]
+    if(reg1 == "FLAGS" or reg2 == "FLAGS" or reg3 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     unused = "00"
     try:
         r1 = RegisterTable[reg1]
@@ -214,6 +224,9 @@ def mul(reg1, reg2, reg3):
 
 def xor(reg1, reg2, reg3):
     opcode = OPcodeTable["xor"][0]
+    if(reg1 == "FLAGS" or reg2 == "FLAGS" or reg3 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     unused = "00"
     try:
         r1 = RegisterTable[reg1]
@@ -230,6 +243,9 @@ def xor(reg1, reg2, reg3):
 
 def doOR(reg1, reg2, reg3):
     opcode = OPcodeTable["or"][0]
+    if(reg1 == "FLAGS" or reg2 == "FLAGS" or reg3 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     unused = "00"
     try:
         r1 = RegisterTable[reg1]
@@ -246,6 +262,9 @@ def doOR(reg1, reg2, reg3):
 
 def doAnd(reg1, reg2, reg3):
     opcode = OPcodeTable["and"][0]
+    if(reg1 == "FLAGS" or reg2 == "FLAGS" or reg3 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     unused = "00"
     try:
         r1 = RegisterTable[reg1]
@@ -267,6 +286,10 @@ Type B instructions
 
 def mov(reg1, imm):
     opcode = OPcodeTable["mov"][0][0]
+    if(reg1 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
+    
     r1 = RegisterTable[reg1]
     if(int(imm[1::]) > 255 or int(imm[1::]) < 0):
         print("Error in line "+str(errorLineCounter) + " Immediate not in range 0 to 255")
@@ -284,7 +307,12 @@ def mov(reg1, imm):
 
 
 def rs(reg1, imm):
+    
     opcode = OPcodeTable["rs"][0][0]
+    if(reg1 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
+    
     r1 = RegisterTable[reg1]
     if(int(imm[1::]) > 255 or int(imm[1::]) < 0):
         print("Error in line "+str(errorLineCounter) + " Immediate not in range 0 to 255")
@@ -302,6 +330,9 @@ def rs(reg1, imm):
 
 def ls(reg1, imm):
     opcode = OPcodeTable["ls"][0][0]
+    if(reg1 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     r1 = RegisterTable[reg1]
     if(int(imm[1::]) > 255 or int(imm[1::]) < 0):
         print("Error in line "+str(errorLineCounter) + " Immediate not in range 0 to 255")
@@ -323,6 +354,9 @@ type C instructions
 
 
 def moveC(reg1, reg2):
+    if(reg1 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     opcode = OPcodeTable["mov"][1][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
@@ -331,6 +365,9 @@ def moveC(reg1, reg2):
 
 
 def div(reg1, reg2):
+    if(reg1 == "FLAGS" or reg2 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     opcode = OPcodeTable["div"][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
@@ -339,6 +376,9 @@ def div(reg1, reg2):
 
 
 def doNot(reg1, reg2):
+    if(reg1 == "FLAGS" or reg2 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     opcode = OPcodeTable["not"][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
@@ -347,6 +387,9 @@ def doNot(reg1, reg2):
 
 
 def cmp(reg1, reg2):
+    if(reg1 == "FLAGS" or reg2 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     opcode = OPcodeTable["cmp"][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
@@ -361,6 +404,9 @@ type D instruction
 
 
 def load(reg1, var):
+    if(reg1 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     opcode = OPcodeTable["ld"][0]
     r1 = RegisterTable[reg1]
     address = bin(var)[2::].zfill(8)
@@ -368,6 +414,9 @@ def load(reg1, var):
 
 
 def store(reg1, var):
+    if(reg1 == "FLAGS"):
+        print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
+        exit()
     opcode = OPcodeTable["st"][0]
     r1 = RegisterTable[reg1]
     address = bin(var)[2::].zfill(8)
