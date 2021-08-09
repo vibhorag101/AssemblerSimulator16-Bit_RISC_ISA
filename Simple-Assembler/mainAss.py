@@ -11,10 +11,10 @@ FLAG = [0, 0, 0, 0]
 # lineCounter used for assigning the value to the variable and count total instructions
 lineCounter = 0
 # errorLineCounter is used to tell which line is causing the error
-errorLineCounter=0
+errorLineCounter = 0
 errorFlag = False
 mainList = []
-labelDict= {}
+labelDict = {}
 
 RegisterTable = {
     "R0": "000",
@@ -113,8 +113,6 @@ def InitialiseFlag(FLAG):
     FLAG[3] = 0
 
 
-
-
 """
 use the following functions to set
 the value of flag register
@@ -172,7 +170,7 @@ def add(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
+        print("Error in line "+str(errorLineCounter) + " Invalid Register")
         exit()
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
@@ -188,12 +186,12 @@ def sub(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
+        print("Error in line "+str(errorLineCounter) + " Invalid Register")
         exit()
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
         exit()
-    
+
     print(opcode+unused+r1+r2+r3)
 
 
@@ -205,7 +203,7 @@ def mul(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
+        print("Error in line "+str(errorLineCounter) + " Invalid Register")
         exit()
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
@@ -221,7 +219,7 @@ def xor(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
+        print("Error in line "+str(errorLineCounter) + " Invalid Register")
         exit()
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
@@ -237,7 +235,7 @@ def doOR(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
+        print("Error in line "+str(errorLineCounter) + " Invalid Register")
         exit()
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
@@ -253,7 +251,7 @@ def doAnd(reg1, reg2, reg3):
         r2 = RegisterTable[reg2]
         r3 = RegisterTable[reg3]
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Register")
+        print("Error in line "+str(errorLineCounter) + " Invalid Register")
         exit()
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
@@ -272,10 +270,10 @@ def mov(reg1, imm):
     try:
         imm = bin(int(imm[1::]))[2:].zfill(8)
     except NameError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        print("Error in line "+str(errorLineCounter) + " Invalid Immediate")
         exit()
     except ValueError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        print("Error in line "+str(errorLineCounter) + " Invalid Immediate")
         exit()
 
     print(opcode+r1+imm)
@@ -287,10 +285,10 @@ def rs(reg1, imm):
     try:
         imm = bin(int(imm[1::]))[2:].zfill(8)
     except NameError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        print("Error in line "+str(errorLineCounter) + " Invalid Immediate")
         exit()
     except ValueError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        print("Error in line "+str(errorLineCounter) + " Invalid Immediate")
         exit()
     print(opcode+r1+imm)
 
@@ -301,10 +299,10 @@ def ls(reg1, imm):
     try:
         imm = bin(int(imm[1::]))[2:].zfill(8)
     except NameError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        print("Error in line "+str(errorLineCounter) + " Invalid Immediate")
         exit()
     except ValueError:
-        print("Error in line "+str(errorLineCounter)+ " Invalid Immediate")
+        print("Error in line "+str(errorLineCounter) + " Invalid Immediate")
         exit()
     print(opcode+r1+imm)
 
@@ -313,46 +311,53 @@ def ls(reg1, imm):
 type C instructions
 """
 
+
 def moveC(reg1, reg2):
-    opcode= OPcodeTable["mov"][1][0]
+    opcode = OPcodeTable["mov"][1][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
-    unused= "00000"
+    unused = "00000"
     print(opcode+unused+r1+r2)
 
-def div(reg1,reg2):
-    opcode= OPcodeTable["div"][0]
+
+def div(reg1, reg2):
+    opcode = OPcodeTable["div"][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
-    unused= "00000"
+    unused = "00000"
     print(opcode+unused+r1+r2)
 
-def doNot(reg1,reg2):
-    opcode= OPcodeTable["not"][0]
+
+def doNot(reg1, reg2):
+    opcode = OPcodeTable["not"][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
-    unused= "00000"
+    unused = "00000"
     print(opcode+unused+r1+r2)
 
-def cmp(reg1,reg2):
-    opcode= OPcodeTable["cmp"][0]
+
+def cmp(reg1, reg2):
+    opcode = OPcodeTable["cmp"][0]
     r1 = RegisterTable[reg1]
     r2 = RegisterTable[reg2]
-    unused= "00000"
-    #TODO implement the comparison logic
+    unused = "00000"
+    # TODO implement the comparison logic
     print(opcode+unused+r1+r2)
 
 
 """
 type D instruction
 """
-def load(reg1,var):
+
+
+def load(reg1, var):
     opcode = OPcodeTable["ld"][0]
     r1 = RegisterTable[reg1]
     address = bin(var)[2::].zfill(8)
     print(opcode+r1+address)
 
-def store(reg1,var):
+
+def store(reg1, var):
     opcode = OPcodeTable["st"][0]
     r1 = RegisterTable[reg1]
     address = bin(var)[2::].zfill(8)
@@ -362,7 +367,8 @@ def store(reg1,var):
 """
 type E instructions
 """
-#TODO fix the branch label TYPE_CHECKING
+# TODO fix the branch label TYPE_CHECKING
+
 
 def jmp(var):
     opcode = OPcodeTable["jmp"][0]
@@ -371,9 +377,11 @@ def jmp(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+" variable used without define")
+        print("Error in line "+str(errorLineCounter) +
+              " variable used without define")
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
+
 
 def jlt(var):
     opcode = OPcodeTable["jlt"][0]
@@ -382,7 +390,8 @@ def jlt(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+" variable used without define")
+        print("Error in line "+str(errorLineCounter) +
+              " variable used without define")
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
 
@@ -394,9 +403,11 @@ def jgt(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+" variable used without define")
+        print("Error in line "+str(errorLineCounter) +
+              " variable used without define")
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
+
 
 def je(var):
     opcode = OPcodeTable["je"][0]
@@ -405,28 +416,31 @@ def je(var):
         address = bin(var)[2::].zfill(8)
         print(opcode+unused+address)
     except KeyError:
-        print("Error in line "+str(errorLineCounter)+" variable used without define")
+        print("Error in line "+str(errorLineCounter) +
+              " variable used without define")
     except:
         print("Error in line "+str(errorLineCounter)+" General Syntax error")
-
 
 
 """
 some general variable required for the code flow are implemented below
 """
 # this functions checks the argument length given
-def checkArgLength(opType,commandList,label):
+
+
+def checkArgLength(opType, commandList, label):
     checkLength = len(commandList)
     if(label == True):
         if(checkLength != binaryEncoding[opType]["commandSize"]+1):
-            print("Error in line: "+errorLineCounter+" Invalid number of arguments for type",opType,"operation")
+            print("Error in line: "+errorLineCounter +
+                  " Invalid number of arguments for type", opType, "operation")
             exit()
     else:
         if(checkLength != binaryEncoding[opType]["commandSize"]):
-            print("Error in line: "+str(errorLineCounter)+" Invalid number of arguments for type",opType,"operation")
+            print("Error in line: "+str(errorLineCounter) +
+                  " Invalid number of arguments for type", opType, "operation")
             exit()
 
-    
 
 """
 Input Part
@@ -439,10 +453,10 @@ the whole logic would be put in this while loop
 # while(commandInput != "hlt"):
 for commandInput in stdin:
     if(commandInput != ""):
-        commandInput=commandInput.strip()
-        if(commandInput==""):
+        commandInput = commandInput.strip()
+        if(commandInput == ""):
             continue
-        command= commandInput.split()
+        command = commandInput.split()
         mainList.append(command)
         if("var" not in command):
             if(command[0][-1] == ":"):
@@ -450,7 +464,7 @@ for commandInput in stdin:
             lineCounter += 1
     else:
         break
-#REVIEW
+# REVIEW
 """
 An additional input is created
 if we have reached the end of file then an eoferror is raised which
@@ -460,16 +474,16 @@ is raised indicating halt is not the last statement
 Although when running without automated testing we need an additional enter
 """
 
-if(lineCounter >256):
+if(lineCounter > 256):
     print("instruction count exceeds 256")
     exit()
 
 """
 following code assign the value to the variable
 """
-varDict= {}
+varDict = {}
 varDict = labelDict.copy()
-varErrorCounter=0
+varErrorCounter = 0
 for varList in mainList:
     label = False
     labelCorrect = 0
@@ -482,25 +496,27 @@ for varList in mainList:
         try:
             OPname = varList[1]
 
-            labelCorrect=1
+            labelCorrect = 1
         except IndexError:
-            print("Error in line "+str(varErrorCounter)+" Invalid number of arguments for label or variable")
+            print("Error in line "+str(varErrorCounter) +
+                  " Invalid number of arguments for label or variable")
             exit()
-    
+
     if(OPname == "var"):
         try:
             varDict[varList[1+labelCorrect]] = lineCounter
-            lineCounter=lineCounter+1
+            lineCounter = lineCounter+1
         except IndexError:
-            print("Error in line "+str(varErrorCounter)+" Invalid number of arguments for variable")
+            print("Error in line "+str(varErrorCounter) +
+                  " Invalid number of arguments for variable")
             exit()
-    varErrorCounter=varErrorCounter+1
-#NOTE
+    varErrorCounter = varErrorCounter+1
+# NOTE
 # below variable counts the line to give out the error line number
 
 
 for commandList in mainList:
-    
+
     lineCounter = lineCounter + 1
     # below checks the label
     label = False
@@ -516,7 +532,8 @@ for commandList in mainList:
             label = True
             labelCorrect = 1
         except IndexError:
-            print("Error in line "+str(errorLineCounter)+" incomplete arguments after label")
+            print("Error in line "+str(errorLineCounter) +
+                  " incomplete arguments after label")
             exit()
         except:
             print("Error in line "+str(errorLineCounter)+" General Syntax error")
@@ -536,139 +553,142 @@ for commandList in mainList:
             # REVIEW possible error for var
             # TODO add the type specific length check
             # TODO var instructions
-            #TODO create the errors at various parts
+            # TODO create the errors at various parts
 
             # code for operations other than mov is implemented below
             """
             the following are the type A operations
             """
-            
+
             if(OPname == "add"):
-                checkArgLength("A",commandList,label)
+                checkArgLength("A", commandList, label)
                 add(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "sub"):
-                checkArgLength("A",commandList,label)
+                checkArgLength("A", commandList, label)
                 sub(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "mul"):
-                checkArgLength("A",commandList,label)
+                checkArgLength("A", commandList, label)
                 mul(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "xor"):
-                checkArgLength("A",commandList,label)
+                checkArgLength("A", commandList, label)
                 xor(commandList[1+labelCorrect], commandList[2 +
                     labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "or"):
-                checkArgLength("A",commandList,label)
+                checkArgLength("A", commandList, label)
                 doOR(commandList[1+labelCorrect], commandList[2 +
-                        labelCorrect], commandList[3+labelCorrect])
+                                                              labelCorrect], commandList[3+labelCorrect])
             elif(OPname == "and"):
-                checkArgLength("A",commandList,label)
+                checkArgLength("A", commandList, label)
                 doAnd(commandList[1+labelCorrect], commandList[2 +
-                        labelCorrect], commandList[3+labelCorrect])
+                                                               labelCorrect], commandList[3+labelCorrect])
 
             # type B instructions are implemented below
             elif (OPname == "rs"):
-                checkArgLength("B",commandList,label)
+                checkArgLength("B", commandList, label)
                 rs(commandList[1+labelCorrect],
                     commandList[2+labelCorrect])
 
             elif (OPname == "ls"):
-                checkArgLength("B",commandList,label)
+                checkArgLength("B", commandList, label)
                 ls(commandList[1+labelCorrect],
                     commandList[2+labelCorrect])
-            
-            #type C instructions are implemented below
+
+            # type C instructions are implemented below
             elif(OPname == "div"):
-                checkArgLength("C",commandList,label)
+                checkArgLength("C", commandList, label)
                 div(commandList[1+labelCorrect],
-                commandList[2+labelCorrect])
-            
+                    commandList[2+labelCorrect])
+
             elif(OPname == "not"):
-                checkArgLength("C",commandList,label)
+                checkArgLength("C", commandList, label)
                 doNot(commandList[1+labelCorrect],
-                commandList[2+labelCorrect])
-            
+                      commandList[2+labelCorrect])
+
             elif(OPname == "cmp"):
-                checkArgLength("C",commandList,label)
+                checkArgLength("C", commandList, label)
                 cmp(commandList[1+labelCorrect],
-                commandList[2+labelCorrect])
+                    commandList[2+labelCorrect])
 
             # type D instructions are implemented below
 
             elif(OPname == "ld"):
-                checkArgLength("D",commandList,label)
+                checkArgLength("D", commandList, label)
                 try:
                     load(commandList[1+labelCorrect],
-                varDict[commandList[2+labelCorrect]])
+                         varDict[commandList[2+labelCorrect]])
                 except KeyError:
-                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    print("Error in line "+str(errorLineCounter) +
+                          " variable used without define")
                     exit()
             elif(OPname == "st"):
-                checkArgLength("D",commandList,label)
+                checkArgLength("D", commandList, label)
                 try:
                     store(commandList[1+labelCorrect],
-                    varDict[commandList[2+labelCorrect]])
+                          varDict[commandList[2+labelCorrect]])
                 except KeyError:
-                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    print("Error in line "+str(errorLineCounter) +
+                          " variable used without define")
                     exit()
-            
 
             # type E instructions are implemented below
             elif(OPname == "jmp"):
-                checkArgLength("E",commandList,label)
+                checkArgLength("E", commandList, label)
                 try:
                     jmp(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    print("Error in line "+str(errorLineCounter) +
+                          " variable used without define")
                     exit()
 
             elif(OPname == "jlt"):
-                checkArgLength("E",commandList,label)
+                checkArgLength("E", commandList, label)
                 try:
                     jlt(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    print("Error in line "+str(errorLineCounter) +
+                          " variable used without define")
                     exit()
 
             elif(OPname == "jgt"):
-                checkArgLength("E",commandList,label)
+                checkArgLength("E", commandList, label)
                 try:
                     jgt(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    print("Error in line "+str(errorLineCounter) +
+                          " variable used without define")
                     exit()
-                
+
             elif(OPname == "je"):
-                checkArgLength("E",commandList,label)
+                checkArgLength("E", commandList, label)
                 try:
                     je(varDict[commandList[1+labelCorrect]])
                 except KeyError:
-                    print("Error in line "+str(errorLineCounter)+" variable used without define")
+                    print("Error in line "+str(errorLineCounter) +
+                          " variable used without define")
                     exit()
-
 
         else:
             # since mov has two data types, we need to check which it is referring to
             if(commandList[-1][0] == "$"):
                 insType = "B"
-                checkArgLength(insType,commandList,label)
+                checkArgLength(insType, commandList, label)
                 mov(commandList[1+labelCorrect],
                     commandList[2+labelCorrect])
             else:
                 insType = "C"
-                checkArgLength(insType,commandList,label)
+                checkArgLength(insType, commandList, label)
                 moveC(commandList[1+labelCorrect],
-                commandList[2+labelCorrect])
-
+                      commandList[2+labelCorrect])
 
     else:
         # if the command is invalid then print the error message
         print("Error in line "+str(errorLineCounter)+" Invalid command")
         exit()
-    errorLineCounter=errorLineCounter+1
+    errorLineCounter = errorLineCounter+1
 
 print("1001100000000000")
 
-#TODO error line counter
+# TODO error line counter
