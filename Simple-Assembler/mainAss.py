@@ -451,7 +451,6 @@ are ignored and the input is splitted into a list
 the whole logic would be put in this while loop
 """
 
-# while(commandInput != "hlt"):
 for commandInput in stdin:
     if(commandInput != ""):
         commandInput = commandInput.strip()
@@ -466,6 +465,35 @@ for commandInput in stdin:
     else:
         break
 # REVIEW
+
+"""
+error checking part
+"""
+
+# below code checks the number of hlt statement present
+hltCounter =0 
+for i in mainList:
+    for j in i:
+        if(j == "hlt"):
+            hltCounter += 1
+if(hltCounter == 0):
+    print("Error there is no hlt statement in the code")
+    exit()
+if(hltCounter > 1):
+    print("Error: hlt present "+str(hltCounter)+" times")
+    exit()
+
+# below code checks if hlt is last command
+if(mainList[-1][0][-1] != ":"):
+    if(mainList[-1][0] != "hlt"):
+        print("Error in last line : hlt not the last command ")
+        exit()
+else:
+    if(mainList[-1][-1] != "hlt"):
+        print("Error in last line: hlt not the last command ")
+        exit()
+
+
 
 
 
