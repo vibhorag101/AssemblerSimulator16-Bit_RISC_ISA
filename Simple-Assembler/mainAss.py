@@ -598,16 +598,24 @@ for varList in mainList:
 
     if(OPname == "var"):
         try:
+            temp = varDict[varList[1+labelCorrect]]
+            print("Error in line "+str(varErrorCounter) +
+                  " Multiple declaration of same variable "+varList[1+labelCorrect] + " not allowed" )
+            exit()
+
+        except KeyError:
             varDict[varList[1+labelCorrect]] = lineCounter
             lineCounter = lineCounter+1
+
         except IndexError:
             print("Error in line "+str(varErrorCounter) +
                   " Invalid number of arguments for variable")
             exit()
+
+
     varErrorCounter = varErrorCounter+1
 # NOTE
 # below variable counts the line to give out the error line number
-
 
 for commandList in mainList:
 
