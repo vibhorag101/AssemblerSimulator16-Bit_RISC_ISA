@@ -307,8 +307,7 @@ def mov(reg1, imm):
 
 
 def rs(reg1, imm):
-    
-    opcode = OPcodeTable["rs"][0][0]
+    opcode = OPcodeTable["rs"][0]
     if(reg1 == "FLAGS"):
         print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
         exit()
@@ -329,7 +328,7 @@ def rs(reg1, imm):
 
 
 def ls(reg1, imm):
-    opcode = OPcodeTable["ls"][0][0]
+    opcode = OPcodeTable["ls"][0]
     if(reg1 == "FLAGS"):
         print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
         exit()
