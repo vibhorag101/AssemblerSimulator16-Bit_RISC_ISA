@@ -1,4 +1,4 @@
-RegisterTable = {
+registers = {
     "000":r1,
     "001":r2,
     "010":r3,
@@ -92,10 +92,19 @@ while (not halted):
     opc = code[0:5]
 
     if opc = "00000" :
-        
-        add()
+        reg1 = registers[code[6:9]]
+        reg2 = registers[code[9:12]]
+        reg3 = registers[code[12:]]
+
+        add(reg1,reg2,reg3)
+
     elif opc == "00001":
-        sub()
+        reg1 = registers[code[6:9]]
+        reg2 = registers[code[9:12]]
+        reg3 = registers[code[12:]]
+
+        sub(reg1,reg2,reg3)
+
     elif opc == "00010":
         movimm()
     elif opc == "00011":
@@ -105,9 +114,19 @@ while (not halted):
     elif opc == "00101":
         st()
     elif opc == "00110":
-        mul()
+        reg1 = registers[code[6:9]]
+        reg2 = registers[code[9:12]]
+        reg3 = registers[code[12:]]
+
+        mul(reg1,reg2,reg3)
+
     elif opc == "00111":
-        div()
+        reg1 = registers[code[6:9]]
+        reg2 = registers[code[9:12]]
+        reg3 = registers[code[12:]]
+
+        div(reg1,reg2,reg3)
+        
     elif opc == "01000":
         rtsf()
     elif opc == "01001":
