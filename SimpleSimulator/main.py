@@ -29,8 +29,10 @@ def sub(reg1,reg2,reg3):
 def movimm(reg1,imm):
     reg1 = imm
 
+def movreg(reg1,reg2):
+    reg1 = reg2
+    
 
-def movreg():
 
 def ld():
 
