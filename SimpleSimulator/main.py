@@ -1,3 +1,13 @@
+RegisterTable = {
+    "000":r1,
+    "001":r2,
+    "010":r3,
+    "011":r4,
+    "100":r5,
+    "101":r6}
+
+
+
 r1 = 00000000
 r2 = 00000000
 r3 = 00000000
@@ -9,7 +19,9 @@ pc = 00000000
 halted = False
 
 
-def add():
+def add(reg1,reg2,reg3):
+    reg1 = reg2 + reg3
+
 
 def sub():
 
@@ -56,6 +68,7 @@ while (not halted):
     opc = code[0:5]
 
     if opc = "00000" :
+        
         add()
     elif opc == "00001":
         sub()
