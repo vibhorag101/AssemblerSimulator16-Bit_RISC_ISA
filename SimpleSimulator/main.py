@@ -20,10 +20,20 @@ halted = False
 
 
 def add(reg1,reg2,reg3):
-    reg1 = reg2 + reg3
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
+    re1 = re2 + re3
+
+    /* convert the values of re1 to binary */
 
 
 def sub(reg1,reg2,reg3):
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
     reg1 = reg2 - reg3
 
 def movimm(reg1,imm):
@@ -37,9 +47,17 @@ def ld():
 def st():
 
 def mul(reg1,reg2,reg3):
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
     reg1 = reg2*reg3
 
 def div(reg1,reg2,reg3):
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
     reg1 = reg2/reg3
 
 def rtsf():
@@ -65,6 +83,7 @@ def jgt():
 def je():
 
 def hlt():
+    halted = True
 
 
 while (not halted):
