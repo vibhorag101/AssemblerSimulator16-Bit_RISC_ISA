@@ -8,6 +8,48 @@ flags = 00000000
 pc = 00000000
 halted = False
 
+
+def add():
+
+def sub():
+
+def movimm():
+
+def movreg():
+
+def ld():
+
+def st():
+
+def mul():
+
+def div():
+
+def rtsf():
+
+def ltsf():
+
+def xor():
+
+def oor():
+
+def aand():
+
+def invert():
+
+def compare():
+
+def uncjmp():
+
+def jlt():
+
+def jgt():
+
+def je():
+
+def hlt():
+
+
 while (not halted):
     code = input()
     code = str(code)
