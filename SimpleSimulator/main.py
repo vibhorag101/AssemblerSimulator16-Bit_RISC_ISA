@@ -32,8 +32,6 @@ def movimm(reg1,imm):
 def movreg(reg1,reg2):
     reg1 = reg2
 
-
-
 def ld():
 
 def st():
@@ -41,7 +39,8 @@ def st():
 def mul(reg1,reg2,reg3):
     reg1 = reg2*reg3
 
-def div():
+def div(reg1,reg2,reg3):
+    reg1 = reg2/reg3
 
 def rtsf():
 
