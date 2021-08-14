@@ -92,41 +92,49 @@ while (not halted):
     opc = code[0:5]
 
     if opc = "00000" :
-        reg1 = registers[code[6:9]]
-        reg2 = registers[code[9:12]]
-        reg3 = registers[code[12:]]
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
 
         add(reg1,reg2,reg3)
 
     elif opc == "00001":
-        reg1 = registers[code[6:9]]
-        reg2 = registers[code[9:12]]
-        reg3 = registers[code[12:]]
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
 
         sub(reg1,reg2,reg3)
 
     elif opc == "00010":
-        movimm()
+        reg1 = registers[code[5:8]]
+        imm = "00000000" + code[8:]
+        imm = int(imm)
+        movimm(reg1,imm)
+
     elif opc == "00011":
-        movreg()
+        reg1 = registers[code[10:13]]
+        reg2 = registers[code[13:]]
+
+        movreg(reg1,reg2)
+        
     elif opc == "00100":
         ld()
     elif opc == "00101":
         st()
     elif opc == "00110":
-        reg1 = registers[code[6:9]]
-        reg2 = registers[code[9:12]]
-        reg3 = registers[code[12:]]
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
 
         mul(reg1,reg2,reg3)
 
     elif opc == "00111":
-        reg1 = registers[code[6:9]]
-        reg2 = registers[code[9:12]]
-        reg3 = registers[code[12:]]
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
 
         div(reg1,reg2,reg3)
-        
+
     elif opc == "01000":
         rtsf()
     elif opc == "01001":
