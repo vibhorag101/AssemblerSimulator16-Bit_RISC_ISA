@@ -26,7 +26,9 @@ def add(reg1,reg2,reg3):
 def sub(reg1,reg2,reg3):
     reg1 = reg2 - reg3
 
-def movimm():
+def movimm(reg1,imm):
+    reg1 = imm
+
 
 def movreg():
 
