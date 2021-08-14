@@ -23,7 +23,8 @@ def add(reg1,reg2,reg3):
     reg1 = reg2 + reg3
 
 
-def sub():
+def sub(reg1,reg2,reg3):
+    reg1 = reg2 - reg3
 
 def movimm():
 
