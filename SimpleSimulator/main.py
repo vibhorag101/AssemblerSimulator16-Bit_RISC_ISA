@@ -57,7 +57,7 @@ def div(reg1,reg2,reg3):
     re1 = int(reg1,2)
     re2 = int(reg2,2)
     re3 = int(reg3,2)
-    //wrong store the operation
+    
 
     reg1 = reg2/reg3
 
@@ -142,7 +142,7 @@ while (not halted):
     elif opc == "00111":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
-        //store the operation 
+        
 
         div(reg1,reg2,reg3)
 
