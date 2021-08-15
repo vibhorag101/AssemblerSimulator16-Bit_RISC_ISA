@@ -57,20 +57,31 @@ def div(reg1,reg2,reg3):
     re1 = int(reg1,2)
     re2 = int(reg2,2)
     re3 = int(reg3,2)
+    //wrong store the operation
 
     reg1 = reg2/reg3
 
-def rtsf():
+def rtsf(reg1,imm):
+    n = int(imm,2)
+    for x in range(n):
+        reg1>>
 
-def ltsf():
+def ltsf(reg1,imm):
+    n = int(imm,2)
+    for x in range(n):
+        reg1<<
 
-def xor():
+def xor(reg1,reg2,reg3):
+    reg1 = reg2^reg3
 
-def oor():
+def oor(reg1,reg2,reg3):
+    reg1 = reg2|reg3
 
-def aand():
+def aand(reg1,reg2,reg3):
+    reg1 = reg2&reg3
 
-def invert():
+def invert(reg1,reg2):
+    reg1 = ~reg2
 
 def compare():
 
@@ -116,7 +127,7 @@ while (not halted):
         reg2 = registers[code[13:]]
 
         movreg(reg1,reg2)
-        
+
     elif opc == "00100":
         ld()
     elif opc == "00101":
@@ -131,22 +142,51 @@ while (not halted):
     elif opc == "00111":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        //store the operation 
 
         div(reg1,reg2,reg3)
 
     elif opc == "01000":
-        rtsf()
+        reg1 = registers[code[5:8]]
+        imm = "00000000" + code[8:]
+        imm = int(imm)
+
+        rtsf(reg1,imm)
+
     elif opc == "01001":
-        ltsf()
+        reg1 = registers[code[5:8]]
+        imm = "00000000" + code[8:]
+        imm = int(imm)
+
+        ltsf(reg1,imm)
+
     elif opc == "01010":
-        xor()
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
+
+        xor(reg1,reg2,reg3)
+
     elif opc == "01011":
-        oor()
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
+
+        oor(reg1,reg2,reg3)
+
     elif opc == "01100":
-        aand()
+        reg1 = registers[code[7:10]]
+        reg2 = registers[code[10:13]]
+        reg3 = registers[code[13:]]
+
+        aand(reg1,reg2,reg3)
+
     elif opc == "01101":
-        invert()
+        reg1 = registers[code[10:13]]
+        reg2 = registers[code[13:]]
+
+        invert(reg1,reg2)
+
     elif opc == "01110":
         compare()
     elif opc == "01111":
