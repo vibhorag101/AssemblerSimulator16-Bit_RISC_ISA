@@ -357,8 +357,13 @@ def moveC(reg1, reg2):
         print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
         exit()
     opcode = OPcodeTable["mov"][1][0]
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+    except KeyError:
+        print("Error in line "+str(errorLineCounter)+" Invalid register")
+        exit()
+
     unused = "00000"
     return(opcode+unused+r1+r2)
 
@@ -558,10 +563,10 @@ varErrorCounter=0
 for i in mainList:
     if("var" not in i):
         varFlag = True
-        varErrorCounter += 1
     if(("var" in i) and varFlag):
         print("Error in line "+str(varErrorCounter)+" variable not defined in the beginning")
         exit()
+    varErrorCounter += 1
 
 
 
