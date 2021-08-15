@@ -527,11 +527,12 @@ for commandInput in stdin:
     else:
         break
 # REVIEW
-
 """
 error checking part
 """
-
+if(lineCounter > 256):
+    print("instruction count exceeds 256")
+    exit()
 # below code checks the number of hlt statement present
 hltCounter =0 
 for i in mainList:
@@ -573,9 +574,7 @@ for i in mainList:
 
 
 
-if(lineCounter > 256):
-    print("instruction count exceeds 256")
-    exit()
+
 
 """
 following code assign the value to the variable
