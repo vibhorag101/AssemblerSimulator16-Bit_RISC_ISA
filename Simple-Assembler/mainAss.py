@@ -495,7 +495,7 @@ def checkArgLength(opType, commandList, label):
     checkLength = len(commandList)
     if(label == True):
         if(checkLength != binaryEncoding[opType]["commandSize"]+1):
-            print("Error in line: "+errorLineCounter +
+            print("Error in line: "+str(errorLineCounter) +
                   " Invalid number of arguments for type", opType, "operation")
             exit()
     else:
