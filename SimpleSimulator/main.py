@@ -14,7 +14,10 @@ r3 = 00000000
 r4 = 00000000
 r5 = 00000000
 r6 = 00000000
-flags = 00000000
+
+flags = [0,0,0,0] ''' This array has overflow in the 0 index, 1 for lower than, 2 for greater than and 
+                         3 for equal'''
+
 pc = 00000000
 halted = False
 
