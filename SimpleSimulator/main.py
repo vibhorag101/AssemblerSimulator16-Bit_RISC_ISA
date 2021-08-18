@@ -86,7 +86,14 @@ def aand(reg1,reg2,reg3):
 def invert(reg1,reg2):
     reg1 = ~reg2
 
-def compare():
+def compare(reg1,reg2):
+    if reg1 < reg2:
+        flag[1] = 1
+    elif reg1 > reg2:
+        flag[2] = 1
+    elif reg1 == reg2:
+        flag[3] = 1
+        
 
 def uncjmp():
 
@@ -191,7 +198,10 @@ while (not halted):
         invert(reg1,reg2)
 
     elif opc == "01110":
-        compare()
+        reg1 = registers[code[10:13]]
+        reg2 = registers[code[13:]]
+
+        compare(reg1,reg2)
     elif opc == "01111":
         uncjmp()
     elif opc == "10000":
