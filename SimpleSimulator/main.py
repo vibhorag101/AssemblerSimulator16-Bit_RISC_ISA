@@ -29,7 +29,7 @@ def add(reg1,reg2,reg3):
 
     re1 = re2 + re3
 
-    /* convert the values of re1 to binary */
+     reg1 = bin(int(re1[1::]))[2:].zfill(16)
 
 
 def sub(reg1,reg2,reg3):
@@ -37,7 +37,9 @@ def sub(reg1,reg2,reg3):
     re2 = int(reg2,2)
     re3 = int(reg3,2)
 
-    reg1 = reg2 - reg3
+    re1 = re2 - re3
+
+    reg1 = bin(int(re1[1::]))[2:].zfill(16)
 
 def movimm(reg1,imm):
     reg1 = imm
@@ -54,7 +56,9 @@ def mul(reg1,reg2,reg3):
     re2 = int(reg2,2)
     re3 = int(reg3,2)
 
-    reg1 = reg2*reg3
+    re1 = re2*re3
+
+    reg1 = bin(int(re1[1::]))[2:].zfill(8)
 
 def div(reg1,reg2,reg3):
     re1 = int(reg1,2)
@@ -62,7 +66,9 @@ def div(reg1,reg2,reg3):
     re3 = int(reg3,2)
     
 
-    reg1 = reg2/reg3
+    re1 = re2/re3
+
+    reg1 = bin(int(re1[1::]))[2:].zfill(8)
 
 def rtsf(reg1,imm):
     n = int(imm,2)
@@ -93,7 +99,7 @@ def compare(reg1,reg2):
         flag[2] = 1
     elif reg1 == reg2:
         flag[3] = 1
-        
+
 
 def uncjmp():
 
