@@ -29,7 +29,9 @@ def add(reg1,reg2,reg3):
 
     re1 = re2 + re3
 
-     reg1 = bin(int(re1[1::]))[2:].zfill(16)
+    re1 = int(re1,2)
+    re1 = str(re1)
+    reg1 = int(str(re1).zfill(16))
 
 
 def sub(reg1,reg2,reg3):
@@ -39,7 +41,9 @@ def sub(reg1,reg2,reg3):
 
     re1 = re2 - re3
 
-    reg1 = bin(int(re1[1::]))[2:].zfill(16)
+    re1 = int(re1,2)
+    re1 = str(re1)
+    reg1 = int(str(re1).zfill(16))
 
 def movimm(reg1,imm):
     reg1 = imm
@@ -57,8 +61,10 @@ def mul(reg1,reg2,reg3):
     re3 = int(reg3,2)
 
     re1 = re2*re3
+    re1 = int(re1,2)
+    re1 = str(re1)
+    reg1 = int(str(re1).zfill(16))
 
-    reg1 = bin(int(re1[1::]))[2:].zfill(8)
 
 def div(reg1,reg2,reg3):
     re1 = int(reg1,2)
@@ -67,8 +73,9 @@ def div(reg1,reg2,reg3):
     
 
     re1 = re2/re3
-
-    reg1 = bin(int(re1[1::]))[2:].zfill(8)
+    re1 = int(re1,2)
+    re1 = str(re1)
+    reg1 = int(str(re1).zfill(16))
 
 def rtsf(reg1,imm):
     n = int(imm,2)
