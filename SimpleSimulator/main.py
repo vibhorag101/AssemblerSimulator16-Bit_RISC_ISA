@@ -1,4 +1,4 @@
-from sys import flags, ps1, stdin
+from sys import stdin
 registers = {
     "000":"00000000",
     "001":"00000000",
@@ -6,8 +6,9 @@ registers = {
     "011":"00000000",
     "100":"00000000",
     "101":"00000000",
+    "110":"00000000",
     #Flags Register last 4 bits 0- Overflow
-    "111": [0,0,0,0]}
+    "111": ["0","0","0","0"]}
 
 mainList =[]
 pc = "00000000"
@@ -24,9 +25,9 @@ def add(reg1,reg2,reg3):
     re1 = re2 + re3
     if(re1<0):
         re1=0;
-        flags[0]=1
+        registers["111"][0]="1"
     elif(re1>65535):
-        flags[0]=1;
+        registers["111"][0]="1"
         overFlowFlag=True
 
     binR1= bin(re1)[2:]
@@ -35,7 +36,7 @@ def add(reg1,reg2,reg3):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
 
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 
 def sub(reg1,reg2,reg3):
@@ -47,9 +48,9 @@ def sub(reg1,reg2,reg3):
     re1 = re2 - re3
     if(re1<0):
         re1=0;
-        flags[0]=1
+        registers["111"][0]="1"
     elif(re1>65535):
-        flags[0]=1;
+        registers["111"][0]="1"
         overFlowFlag=True
 
     binR1= bin(re1)[2:]
@@ -58,7 +59,7 @@ def sub(reg1,reg2,reg3):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
 
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 def mul(reg1,reg2,reg3):
     overFlowFlag=False
@@ -69,9 +70,9 @@ def mul(reg1,reg2,reg3):
     re1 = re2 * re3
     if(re1<0):
         re1=0;
-        flags[0]=1
+        registers["111"][0]="1"
     elif(re1>65535):
-        flags[0]=1;
+        registers["111"][0]="1"
         overFlowFlag=True
 
     binR1= bin(re1)[2:]
@@ -80,7 +81,7 @@ def mul(reg1,reg2,reg3):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
 
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 def div(reg3,reg4):
     re3 = int(reg3,2)
@@ -90,8 +91,8 @@ def div(reg3,reg4):
     binR0= bin(re0)[2:]
     binR1= bin(re1)[2:]
 
-    registers("000")= binR0.zfill(16)
-    registers("001")= binR1.zfill(16)
+    registers["000"]= binR0.zfill(16)
+    registers["001"]= binR1.zfill(16)
 
 
 def movimm(reg1,imm):
@@ -116,14 +117,14 @@ def rtsf(reg1,imm):
     re1 = int(reg1,2)
     re1= re1>>n
     binR1= bin(re1)[2:]
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 def ltsf(reg1,imm):
     n = int(imm,2)
     re1 = int(reg1,2)
     re1= re1<<n
     binR1= bin(re1)[2:]
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 
 def xor(reg1,reg2,reg3):
@@ -134,7 +135,7 @@ def xor(reg1,reg2,reg3):
     re1 = re2 ^ re3
 
     binR1= bin(re1)[2:]
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 def oor(reg1,reg2,reg3):
     re1 = int(reg1,2)
@@ -144,7 +145,7 @@ def oor(reg1,reg2,reg3):
     re1 = re2 | re3
 
     binR1= bin(re1)[2:]
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 def aand(reg1,reg2,reg3):
     re1 = int(reg1,2)
@@ -154,7 +155,7 @@ def aand(reg1,reg2,reg3):
     re1 = re2 & re3
 
     binR1= bin(re1)[2:]
-    registers(reg1)= binR1.zfill(16)
+    registers[reg1]= binR1.zfill(16)
 
 #here we do the true bitwise operation
 #we dont use ~ operator and rather invert each bit manually
@@ -165,7 +166,7 @@ def invert(reg1,reg2):
             temp=temp+"1"
         else:
             temp=temp+ "0"
-    registers(reg1)= temp.zfill(16)
+    registers[reg1]= temp.zfill(16)
 
 def compare(reg1,reg2):
     if reg1 < reg2:
@@ -314,5 +315,27 @@ for code in mainList:
         je()
     elif opc == "10011":
         hlt()
+
+    # printing part
+    flagPrint = "".join(registers["111"]).zfill(16)
+    reqString = pc+" "+ registers["000"]+ " " + registers["001"]+ " " + registers["010"]+ " " + registers["011"]+ " " + registers["100"]+ " " + registers["101"]+ " " + registers["110"]+ " " + flagPrint
+
+#memoryDump
+memoryList =[]
+for i in mainList:
+    memoryList.append(i)
+
+dictItems = varList.items()
+varList= sorted(dictItems)
+for i in varList:
+    memoryList.append(varList[i])
+
+extraLines = 256 - len(memoryList)
+for i in range(extraLines):
+    memoryList.append("0000000000000000")
+
+for i in memoryList:
+    print(i)
+    
 
 
