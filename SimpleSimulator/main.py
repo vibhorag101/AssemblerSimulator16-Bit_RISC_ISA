@@ -1,19 +1,18 @@
 from sys import stdin
 from typing import Type
 registers = {
-    "000":"00000000",
-    "001":"00000000",
-    "010":"00000000",
-    "011":"00000000",
-    "100":"00000000",
-    "101":"00000000",
-    "110":"00000000",
+    "000":"0000000000000000",
+    "001":"0000000000000000",
+    "010":"0000000000000000",
+    "011":"0000000000000000",
+    "100":"0000000000000000",
+    "101":"0000000000000000",
+    "110":"0000000000000000",
     #Flags Register last 4 bits 0- Overflow
     "111": ["0","0","0","0"]}
 
 mainList =[]
 memoryList =[]
-pc = "00000000"
 halted = False
 varList= {}
 
@@ -37,7 +36,6 @@ def add(reg1,reg2,reg3):
     if(overFlowFlag):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
-
     registers[reg1]= binR1.zfill(16)
 
 
@@ -328,15 +326,18 @@ for code in mainList:
     memoryList.append(reqString)
 
 #memoryDump
+dumpCounter = 0
 for i in mainList:
     memoryList.append(i)
+    dumpCounter = dumpCounter + 1
 
 dictItems = varList.items()
 varList= sorted(dictItems)
 for i in varList:
     memoryList.append(varList[i][1])
+    dumpCounter = dumpCounter + 1
 
-extraLines = 256 - len(memoryList)
+extraLines = 256 - dumpCounter
 for i in range(extraLines):
     memoryList.append("0000000000000000")
 
