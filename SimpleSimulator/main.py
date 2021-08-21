@@ -12,6 +12,7 @@ registers = {
 mainList =[]
 pc = "00000000"
 halted = False
+varList= {}
 
 
 def add(reg1,reg2,reg3):
@@ -99,11 +100,11 @@ def movimm(reg1,imm):
 def movreg(reg1,reg2):
     reg1 = reg2
 
-def ld():
-    pass
+def ld(reg1,memory):
+    reg1= varList[memory]
 
-def st():
-    pass
+def st(reg1,memory):
+    varList[memory]= reg1
 
 
 
@@ -234,9 +235,14 @@ for code in mainList:
         movreg(reg1,reg2)
 
     elif opc == "00100":
-        ld()
+        reg1 = registers[code[5:8]]
+        memoryVar = registers[code[8:]]
+        ld(reg1,memoryVar)
+
     elif opc == "00101":
-        st()
+        reg1 = registers[code[5:8]]
+        memoryVar = registers[code[8:]]
+        st(reg1,memoryVar)
     elif opc == "00110":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
