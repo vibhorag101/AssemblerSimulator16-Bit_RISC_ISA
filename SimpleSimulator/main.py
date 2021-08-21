@@ -1,12 +1,13 @@
+from sys import stdin
 registers = {
-    "000":r1,
-    "001":r2,
-    "010":r3,
-    "011":r4,
-    "100":r5,
-    "101":r6}
+    "000":"r1",
+    "001":"r2",
+    "010":"r3",
+    "011":"r4",
+    "100":"r5",
+    "101":"r6"}
 
-
+mainList =[]
 
 
 r1 = 00000000
@@ -100,14 +101,18 @@ def invert(reg1,reg2):
 
 def compare(reg1,reg2):
     if reg1 < reg2:
-        flag[1] = 1
+        flags[1] = 1
     elif reg1 > reg2:
-        flag[2] = 1
+        flags[2] = 1
     elif reg1 == reg2:
-        flag[3] = 1
+        flags[3] = 1
 
 
-def uncjmp():
+def uncjmp(memoryAdress):
+    instLine = int(memoryAdress,2)
+    instruction= mainList[instLine]
+    # now just need to execute the instruction as done in normal case, just replicate from the for loop
+
 
 def jlt():
 
@@ -119,12 +124,20 @@ def hlt():
     halted = True
 
 
-while (not halted):
-    code = input()
-    code = str(code)
+for commandInput in stdin:
+    if(commandInput != ""):
+        commandInput = commandInput.strip()
+        if(commandInput == ""):
+            continue
+        command = commandInput.split()
+        mainList.append(command)
+    else:
+        break
+
+for code in mainList:
     opc = code[0:5]
 
-    if opc = "00000" :
+    if opc == "00000" :
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
         reg3 = registers[code[13:]]
@@ -215,7 +228,8 @@ while (not halted):
 
         compare(reg1,reg2)
     elif opc == "01111":
-        uncjmp()
+        memAdr = code[8:15]
+        uncjmp(memAdr)
     elif opc == "10000":
         jlt()
     elif opc == "10001":
