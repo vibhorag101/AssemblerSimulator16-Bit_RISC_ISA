@@ -9,12 +9,12 @@ registers = {
 
 
 
-r1 = 00000000
-r2 = 00000000
-r3 = 00000000
-r4 = 00000000
-r5 = 00000000
-r6 = 00000000
+r1 = "0000000000000000"
+r2 = "0000000000000000"
+r3 = "0000000000000000"
+r4 = "0000000000000000"
+r5 = "0000000000000000"
+r6 = "0000000000000000"
 
 flags = [0,0,0,0] 
 pc = 00000000
@@ -107,7 +107,12 @@ def compare(reg1,reg2):
         flag[3] = 1
 
 
-def uncjmp():
+def uncjmp(memoryAddress):
+    instLine = int(memoryAdress,2)
+    instruction= mainList[instLine]
+    j = indexOf(instruction)
+
+    return j
 
 def jlt():
 
@@ -132,9 +137,11 @@ for commandInput in stdin:
     else:
         break
 
+len = length(mainList)
 
-for code in mainList:
-    opc = code[0:5]
+
+for i <= len :
+    opc = mainList[i][0:5]
 
     if opc = "00000" :
         reg1 = registers[code[7:10]]
@@ -143,12 +150,15 @@ for code in mainList:
 
         add(reg1,reg2,reg3)
 
+        i = i+1
+
     elif opc == "00001":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
         reg3 = registers[code[13:]]
 
         sub(reg1,reg2,reg3)
+        i = i+1
 
     elif opc == "00010":
         reg1 = registers[code[5:8]]
@@ -156,22 +166,29 @@ for code in mainList:
         imm = int(imm)
         movimm(reg1,imm)
 
+        i = i+1
+
     elif opc == "00011":
         reg1 = registers[code[10:13]]
         reg2 = registers[code[13:]]
 
         movreg(reg1,reg2)
+        i = i+1
 
     elif opc == "00100":
         ld()
+
     elif opc == "00101":
         st()
+
     elif opc == "00110":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
         reg3 = registers[code[13:]]
 
         mul(reg1,reg2,reg3)
+
+        i = i+1
 
     elif opc == "00111":
         reg1 = registers[code[7:10]]
@@ -180,12 +197,16 @@ for code in mainList:
 
         div(reg1,reg2,reg3)
 
+        i = i+1
+
     elif opc == "01000":
         reg1 = registers[code[5:8]]
         imm = "00000000" + code[8:]
         imm = int(imm)
 
         rtsf(reg1,imm)
+
+        i = i+1
 
     elif opc == "01001":
         reg1 = registers[code[5:8]]
@@ -194,12 +215,16 @@ for code in mainList:
 
         ltsf(reg1,imm)
 
+        i = i+1
+
     elif opc == "01010":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
         reg3 = registers[code[13:]]
 
         xor(reg1,reg2,reg3)
+
+        i = i+1
 
     elif opc == "01011":
         reg1 = registers[code[7:10]]
@@ -208,6 +233,8 @@ for code in mainList:
 
         oor(reg1,reg2,reg3)
 
+        i = i+1
+
     elif opc == "01100":
         reg1 = registers[code[7:10]]
         reg2 = registers[code[10:13]]
@@ -215,19 +242,27 @@ for code in mainList:
 
         aand(reg1,reg2,reg3)
 
+        i = i+1
+
     elif opc == "01101":
         reg1 = registers[code[10:13]]
         reg2 = registers[code[13:]]
 
         invert(reg1,reg2)
 
+        i = i+1
+
     elif opc == "01110":
         reg1 = registers[code[10:13]]
         reg2 = registers[code[13:]]
 
         compare(reg1,reg2)
+
+        i = i+1
     elif opc == "01111":
-        uncjmp()
+        memAdr = code[8:15]
+        i = uncjmp(memAdr)
+        
     elif opc == "10000":
         jlt()
     elif opc == "10001":
@@ -236,5 +271,7 @@ for code in mainList:
         je()
     elif opc == "10011":
         hlt()
+        i = i+ 1
+
 
 
