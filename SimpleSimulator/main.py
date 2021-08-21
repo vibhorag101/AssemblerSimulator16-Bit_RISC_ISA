@@ -96,13 +96,17 @@ def div(reg3,reg4):
 
 
 def movimm(reg1,imm):
-    reg1 = imm
+    r1 = imm
+    registers[reg1]=r1.zfill(16)
 
 def movreg(reg1,reg2):
-    reg1 = reg2
+    r1 = reg2
+    registers[reg1]=r1
 
 def ld(reg1,memory):
-    reg1= varList[memory]
+    r1= varList[memory]
+
+
 
 def st(reg1,memory):
     varList[memory]= reg1
@@ -226,7 +230,6 @@ for code in mainList:
     elif opc == "00010":
         reg1 = registers[code[5:8]]
         imm = "00000000" + code[8:]
-        imm = int(imm)
         movimm(reg1,imm)
 
     elif opc == "00011":
@@ -242,7 +245,7 @@ for code in mainList:
 
     elif opc == "00101":
         reg1 = registers[code[5:8]]
-        memoryVar = registers[code[8:]]
+        memoryVar = code[8:]
         st(reg1,memoryVar)
     elif opc == "00110":
         reg1 = registers[code[7:10]]
@@ -344,7 +347,6 @@ for i in range(extraLines):
 for i in memoryList:
     print(i)
     
-
     
 
 
