@@ -119,9 +119,21 @@ def hlt():
     halted = True
 
 
-while (not halted):
-    code = input()
-    code = str(code)
+mainList = []
+
+
+for commandInput in stdin:
+    if(commandInput != ""):
+        commandInput = commandInput.strip()
+        if(commandInput == ""):
+            continue
+        command = commandInput.split()
+        mainList.append(command)
+    else:
+        break
+
+
+for code in mainList:
     opc = code[0:5]
 
     if opc = "00000" :
