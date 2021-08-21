@@ -357,8 +357,13 @@ def moveC(reg1, reg2):
         print("Error in line "+str(errorLineCounter)+" Invalid use of Flags Register")
         exit()
     opcode = OPcodeTable["mov"][1][0]
-    r1 = RegisterTable[reg1]
-    r2 = RegisterTable[reg2]
+    try:
+        r1 = RegisterTable[reg1]
+        r2 = RegisterTable[reg2]
+    except KeyError:
+        print("Error in line "+str(errorLineCounter)+" Invalid register")
+        exit()
+
     unused = "00000"
     return(opcode+unused+r1+r2)
 
@@ -490,7 +495,7 @@ def checkArgLength(opType, commandList, label):
     checkLength = len(commandList)
     if(label == True):
         if(checkLength != binaryEncoding[opType]["commandSize"]+1):
-            print("Error in line: "+errorLineCounter +
+            print("Error in line: "+str(errorLineCounter) +
                   " Invalid number of arguments for type", opType, "operation")
             exit()
     else:
@@ -522,11 +527,12 @@ for commandInput in stdin:
     else:
         break
 # REVIEW
-
 """
 error checking part
 """
-
+if(lineCounter > 256):
+    print("instruction count exceeds 256")
+    exit()
 # below code checks the number of hlt statement present
 hltCounter =0 
 for i in mainList:
@@ -558,19 +564,17 @@ varErrorCounter=0
 for i in mainList:
     if("var" not in i):
         varFlag = True
-        varErrorCounter += 1
     if(("var" in i) and varFlag):
         print("Error in line "+str(varErrorCounter)+" variable not defined in the beginning")
         exit()
+    varErrorCounter += 1
 
 
 
 
 
 
-if(lineCounter > 256):
-    print("instruction count exceeds 256")
-    exit()
+
 
 """
 following code assign the value to the variable
