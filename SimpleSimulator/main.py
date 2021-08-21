@@ -30,7 +30,7 @@ def add(reg1,reg2,reg3):
 
     re1 = int(re1,2)
     re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    reg1 = str(re1).zfill(16)
 
 
 def sub(reg1,reg2,reg3):
@@ -42,7 +42,7 @@ def sub(reg1,reg2,reg3):
 
     re1 = int(re1,2)
     re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    reg1 = str(re1).zfill(16)
 
 def movimm(reg1,imm):
     reg1 = imm
@@ -61,8 +61,8 @@ def mul(reg1,reg2,reg3):
 
     re1 = re2*re3
     re1 = int(re1,2)
-    re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    
+    reg1 = str(re1).zfill(16)
 
 
 def div(reg1,reg2,reg3):
@@ -73,38 +73,78 @@ def div(reg1,reg2,reg3):
 
     re1 = re2/re3
     re1 = int(re1,2)
-    re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    
+    reg1 = str(re1).zfill(16)
 
 def rtsf(reg1,imm):
     n = int(imm,2)
+    reg1 = int(reg1)
     for x in range(n):
         reg1>>
 
+    reg1 = str(reg1).zfill(16)
+
 def ltsf(reg1,imm):
     n = int(imm,2)
+    reg1 = int(reg1)
     for x in range(n):
         reg1<<
 
+    reg1 = str(reg1).zfill(16)
+
 def xor(reg1,reg2,reg3):
+    reg2 = int(reg2)
+    reg3 = int(reg3)
+
     reg1 = reg2^reg3
 
+    reg1 = str(reg1).zfill(16)
+    reg2 = str(reg2).zfill(16)
+    reg3 = str(reg3).zfill(16)
+
 def oor(reg1,reg2,reg3):
+    reg2 = int(reg2)
+    reg3 = int(reg3)
     reg1 = reg2|reg3
 
+    reg1 = str(reg1).zfill(16)
+    reg2 = str(reg2).zfill(16)
+    reg3 = str(reg3).zfill(16)
+
 def aand(reg1,reg2,reg3):
+    reg2 = int(reg2)
+    reg3 = int(reg3)
     reg1 = reg2&reg3
 
+    reg1 = str(reg1).zfill(16)
+    reg2 = str(reg2).zfill(16)
+    reg3 = str(reg3).zfill(16)
+
 def invert(reg1,reg2):
+    reg2 = int(reg2)
+    reg3 = int(reg3)
     reg1 = ~reg2
 
+    reg1 = str(reg1).zfill(16)
+    reg2 = str(reg2).zfill(16)
+    reg3 = str(reg3).zfill(16)
+
 def compare(reg1,reg2):
+    reg2 = int(reg2)
+    reg1 = int(reg3)
+
+    
+
     if reg1 < reg2:
         flag[1] = 1
     elif reg1 > reg2:
         flag[2] = 1
     elif reg1 == reg2:
         flag[3] = 1
+
+    
+    reg2 = str(reg2).zfill(16)
+    reg1 = str(reg3).zfill(16)
 
 
 def uncjmp(memoryAddress):
@@ -141,6 +181,7 @@ len = length(mainList)
 
 
 for i <= len :
+    code = mainList[i]
     opc = mainList[i][0:5]
 
     if opc = "00000" :
@@ -163,7 +204,7 @@ for i <= len :
     elif opc == "00010":
         reg1 = registers[code[5:8]]
         imm = "00000000" + code[8:]
-        imm = int(imm)
+        
         movimm(reg1,imm)
 
         i = i+1
