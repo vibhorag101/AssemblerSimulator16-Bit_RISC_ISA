@@ -1,49 +1,97 @@
-from sys import stdin
+from sys import flags, ps1, stdin
 registers = {
-    "000":"r1",
-    "001":"r2",
-    "010":"r3",
-    "011":"r4",
-    "100":"r5",
-    "101":"r6"}
+    "000":"00000000",
+    "001":"00000000",
+    "010":"00000000",
+    "011":"00000000",
+    "100":"00000000",
+    "101":"00000000",
+    #Flags Register last 4 bits 0- Overflow
+    "111": [0,0,0,0]}
 
 mainList =[]
-
-
-r1 = 00000000
-r2 = 00000000
-r3 = 00000000
-r4 = 00000000
-r5 = 00000000
-r6 = 00000000
-
-flags = [0,0,0,0] 
-pc = 00000000
+pc = "00000000"
 halted = False
 
 
 def add(reg1,reg2,reg3):
+    overFlowFlag=False
     re1 = int(reg1,2)
     re2 = int(reg2,2)
     re3 = int(reg3,2)
 
     re1 = re2 + re3
+    if(re1<0):
+        re1=0;
+        flags[0]=1
+    elif(re1>65535):
+        flags[0]=1;
+        overFlowFlag=True
 
-    re1 = int(re1,2)
-    re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    binR1= bin(re1)[2:]
+    
+    if(overFlowFlag):
+        takeOverFlow = len(binR1)-16
+        binR1=binR1[takeOverFlow:]
+
+    registers(reg1)= binR1.zfill(16)
 
 
 def sub(reg1,reg2,reg3):
+    overFlowFlag=False
     re1 = int(reg1,2)
     re2 = int(reg2,2)
     re3 = int(reg3,2)
 
     re1 = re2 - re3
+    if(re1<0):
+        re1=0;
+        flags[0]=1
+    elif(re1>65535):
+        flags[0]=1;
+        overFlowFlag=True
 
-    re1 = int(re1,2)
-    re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    binR1= bin(re1)[2:]
+    
+    if(overFlowFlag):
+        takeOverFlow = len(binR1)-16
+        binR1=binR1[takeOverFlow:]
+
+    registers(reg1)= binR1.zfill(16)
+
+def mul(reg1,reg2,reg3):
+    overFlowFlag=False
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
+    re1 = re2 * re3
+    if(re1<0):
+        re1=0;
+        flags[0]=1
+    elif(re1>65535):
+        flags[0]=1;
+        overFlowFlag=True
+
+    binR1= bin(re1)[2:]
+    
+    if(overFlowFlag):
+        takeOverFlow = len(binR1)-16
+        binR1=binR1[takeOverFlow:]
+
+    registers(reg1)= binR1.zfill(16)
+
+def div(reg3,reg4):
+    re3 = int(reg3,2)
+    re4 = int(reg4,2)
+    re0= re3//re4
+    re1 = re3 % re4
+    binR0= bin(re0)[2:]
+    binR1= bin(re1)[2:]
+
+    registers("000")= binR0.zfill(16)
+    registers("001")= binR1.zfill(16)
+
 
 def movimm(reg1,imm):
     reg1 = imm
@@ -52,52 +100,71 @@ def movreg(reg1,reg2):
     reg1 = reg2
 
 def ld():
+    pass
 
 def st():
-
-def mul(reg1,reg2,reg3):
-    re1 = int(reg1,2)
-    re2 = int(reg2,2)
-    re3 = int(reg3,2)
-
-    re1 = re2*re3
-    re1 = int(re1,2)
-    re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+    pass
 
 
-def div(reg1,reg2,reg3):
-    re1 = int(reg1,2)
-    re2 = int(reg2,2)
-    re3 = int(reg3,2)
-    
 
-    re1 = re2/re3
-    re1 = int(re1,2)
-    re1 = str(re1)
-    reg1 = int(str(re1).zfill(16))
+
+
 
 def rtsf(reg1,imm):
     n = int(imm,2)
-    for x in range(n):
-        reg1>>
+    re1 = int(reg1,2)
+    re1= re1>>n
+    binR1= bin(re1)[2:]
+    registers(reg1)= binR1.zfill(16)
 
 def ltsf(reg1,imm):
     n = int(imm,2)
-    for x in range(n):
-        reg1<<
+    re1 = int(reg1,2)
+    re1= re1<<n
+    binR1= bin(re1)[2:]
+    registers(reg1)= binR1.zfill(16)
+
 
 def xor(reg1,reg2,reg3):
-    reg1 = reg2^reg3
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
+    re1 = re2 ^ re3
+
+    binR1= bin(re1)[2:]
+    registers(reg1)= binR1.zfill(16)
 
 def oor(reg1,reg2,reg3):
-    reg1 = reg2|reg3
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
+
+    re1 = re2 | re3
+
+    binR1= bin(re1)[2:]
+    registers(reg1)= binR1.zfill(16)
 
 def aand(reg1,reg2,reg3):
-    reg1 = reg2&reg3
+    re1 = int(reg1,2)
+    re2 = int(reg2,2)
+    re3 = int(reg3,2)
 
+    re1 = re2 & re3
+
+    binR1= bin(re1)[2:]
+    registers(reg1)= binR1.zfill(16)
+
+#here we do the true bitwise operation
+#we dont use ~ operator and rather invert each bit manually
 def invert(reg1,reg2):
-    reg1 = ~reg2
+    temp = ""
+    for i in reg2:
+        if(i=="0"):
+            temp=temp+"1"
+        else:
+            temp=temp+ "0"
+    registers(reg1)= temp.zfill(16)
 
 def compare(reg1,reg2):
     if reg1 < reg2:
@@ -115,10 +182,13 @@ def uncjmp(memoryAdress):
 
 
 def jlt():
+    pass
 
 def jgt():
+    pass
 
 def je():
+    pass
 
 def hlt():
     halted = True
