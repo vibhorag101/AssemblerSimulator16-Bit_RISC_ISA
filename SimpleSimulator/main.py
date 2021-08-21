@@ -1,4 +1,5 @@
 from sys import stdin
+from typing import Type
 registers = {
     "000":"00000000",
     "001":"00000000",
@@ -11,6 +12,7 @@ registers = {
     "111": ["0","0","0","0"]}
 
 mainList =[]
+memoryList =[]
 pc = "00000000"
 halted = False
 varList= {}
@@ -170,11 +172,11 @@ def invert(reg1,reg2):
 
 def compare(reg1,reg2):
     if reg1 < reg2:
-        flags[1] = 1
+        registers["111"][1]="1"
     elif reg1 > reg2:
-        flags[2] = 1
+        registers["111"][2]="1"
     elif reg1 == reg2:
-        flags[3] = 1
+        registers["111"][3]="1"
 
 
 def uncjmp(memoryAdress):
@@ -201,11 +203,11 @@ for commandInput in stdin:
         commandInput = commandInput.strip()
         if(commandInput == ""):
             continue
-        command = commandInput.split()
-        mainList.append(command)
+        mainList.append(commandInput)
     else:
         break
 
+lineCounter =0
 for code in mainList:
     opc = code[0:5]
 
@@ -316,19 +318,23 @@ for code in mainList:
     elif opc == "10011":
         hlt()
 
+    pc = bin(lineCounter)[2:].zfill(8)
+    lineCounter = lineCounter + 1
+
     # printing part
     flagPrint = "".join(registers["111"]).zfill(16)
     reqString = pc+" "+ registers["000"]+ " " + registers["001"]+ " " + registers["010"]+ " " + registers["011"]+ " " + registers["100"]+ " " + registers["101"]+ " " + registers["110"]+ " " + flagPrint
 
+    memoryList.append(reqString)
+
 #memoryDump
-memoryList =[]
 for i in mainList:
     memoryList.append(i)
 
 dictItems = varList.items()
 varList= sorted(dictItems)
 for i in varList:
-    memoryList.append(varList[i])
+    memoryList.append(varList[i][1])
 
 extraLines = 256 - len(memoryList)
 for i in range(extraLines):
@@ -336,6 +342,8 @@ for i in range(extraLines):
 
 for i in memoryList:
     print(i)
+    
+
     
 
 
