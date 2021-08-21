@@ -17,7 +17,10 @@ halted = False
 varList= {}
 
 
-def add(reg1,reg2,reg3):
+def add(r1,r2,r3):
+    reg1= registers[r1]
+    reg2= registers[r2]
+    reg3= registers[r3]
     overFlowFlag=False
     re1 = int(reg1,2)
     re2 = int(reg2,2)
@@ -36,10 +39,13 @@ def add(reg1,reg2,reg3):
     if(overFlowFlag):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
-    registers[reg1]= binR1.zfill(16)
+    registers[r1]= binR1.zfill(16)
 
 
-def sub(reg1,reg2,reg3):
+def sub(r1,r2,r3):
+    reg1= registers[r1]
+    reg2= registers[r2]
+    reg3= registers[r3]
     overFlowFlag=False
     re1 = int(reg1,2)
     re2 = int(reg2,2)
@@ -59,9 +65,12 @@ def sub(reg1,reg2,reg3):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
 
-    registers[reg1]= binR1.zfill(16)
+    registers[r1]= binR1.zfill(16)
 
-def mul(reg1,reg2,reg3):
+def mul(r1,r2,r3):
+    reg1= registers[r1]
+    reg2= registers[r2]
+    reg3= registers[r3]
     overFlowFlag=False
     re1 = int(reg1,2)
     re2 = int(reg2,2)
@@ -81,9 +90,12 @@ def mul(reg1,reg2,reg3):
         takeOverFlow = len(binR1)-16
         binR1=binR1[takeOverFlow:]
 
-    registers[reg1]= binR1.zfill(16)
+    registers[r1]= binR1.zfill(16)
 
-def div(reg3,reg4):
+def div(r3,r4):
+
+    reg3= registers[r3]
+    reg4= registers[r4]
     re3 = int(reg3,2)
     re4 = int(reg4,2)
     re0= re3//re4
@@ -100,7 +112,7 @@ def movimm(reg1,imm):
     registers[reg1]=r1.zfill(16)
 
 def movreg(reg1,reg2):
-    r1 = reg2
+    r1 = registers[reg2]
     registers[reg1]=r1
 
 def ld(reg1,memory):
@@ -109,7 +121,7 @@ def ld(reg1,memory):
 
 
 def st(reg1,memory):
-    varList[memory]= reg1
+    varList[memory]= registers[reg1]
 
 
 
@@ -214,97 +226,95 @@ for code in mainList:
     opc = code[0:5]
 
     if opc == "00000" :
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
+        reg3 = code[13:]
 
         add(reg1,reg2,reg3)
 
     elif opc == "00001":
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
+        reg3 = code[13:]
 
         sub(reg1,reg2,reg3)
 
     elif opc == "00010":
-        reg1 = registers[code[5:8]]
+        reg1 = code[5:8]
         imm = "00000000" + code[8:]
         movimm(reg1,imm)
 
     elif opc == "00011":
-        reg1 = registers[code[10:13]]
-        reg2 = registers[code[13:]]
+        reg1 = code[10:13]
+        reg2 = code[13:]
 
         movreg(reg1,reg2)
 
     elif opc == "00100":
-        reg1 = registers[code[5:8]]
-        memoryVar = registers[code[8:]]
+        reg1 = code[5:8]
+        memoryVar = code[8:]
         ld(reg1,memoryVar)
 
     elif opc == "00101":
-        reg1 = registers[code[5:8]]
+        reg1 = code[5:8]
         memoryVar = code[8:]
         st(reg1,memoryVar)
     elif opc == "00110":
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
+        reg3 = code[13:]
 
         mul(reg1,reg2,reg3)
 
     elif opc == "00111":
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
         
 
         div(reg1,reg2,reg3)
 
     elif opc == "01000":
-        reg1 = registers[code[5:8]]
+        reg1 = code[5:8]
         imm = "00000000" + code[8:]
-        imm = int(imm)
 
         rtsf(reg1,imm)
 
     elif opc == "01001":
-        reg1 = registers[code[5:8]]
+        reg1 = code[5:8]
         imm = "00000000" + code[8:]
-        imm = int(imm)
 
         ltsf(reg1,imm)
 
     elif opc == "01010":
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
+        reg3 = code[13:]
 
         xor(reg1,reg2,reg3)
 
     elif opc == "01011":
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
+        reg3 = code[13:]
 
         oor(reg1,reg2,reg3)
 
     elif opc == "01100":
-        reg1 = registers[code[7:10]]
-        reg2 = registers[code[10:13]]
-        reg3 = registers[code[13:]]
+        reg1 = code[7:10]
+        reg2 = code[10:13]
+        reg3 = code[13:]
 
         aand(reg1,reg2,reg3)
 
     elif opc == "01101":
-        reg1 = registers[code[10:13]]
-        reg2 = registers[code[13:]]
+        reg1 = code[10:13]
+        reg2 = code[13:]
 
         invert(reg1,reg2)
 
     elif opc == "01110":
-        reg1 = registers[code[10:13]]
-        reg2 = registers[code[13:]]
+        reg1 = code[10:13]
+        reg2 = code[13:]
 
         compare(reg1,reg2)
     elif opc == "01111":
@@ -336,9 +346,10 @@ for i in mainList:
 
 dictItems = varList.items()
 varList= sorted(dictItems)
-for i in varList:
-    memoryList.append(varList[i][1])
-    dumpCounter = dumpCounter + 1
+if(len(varList)>0):
+    for i in varList:
+        memoryList.append(varList[i][1])
+        dumpCounter = dumpCounter + 1
 
 extraLines = 256 - dumpCounter
 for i in range(extraLines):
