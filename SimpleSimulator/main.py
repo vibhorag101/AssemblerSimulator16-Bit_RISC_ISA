@@ -28,7 +28,7 @@ def add(r1,r2,r3):
 
     re1 = re2 + re3
     if(re1<0):
-        re1=0;
+        re1=0
         registers["111"][0]="1"
     elif(re1>65535):
         registers["111"][0]="1"
@@ -53,7 +53,7 @@ def sub(r1,r2,r3):
 
     re1 = re2 - re3
     if(re1<0):
-        re1=0;
+        re1=0
         registers["111"][0]="1"
     elif(re1>65535):
         registers["111"][0]="1"
@@ -196,19 +196,22 @@ def compare(reg1,reg2):
 
 
 def uncjmp(memoryAdress):
-    instLine = int(memoryAdress,2)
-    instruction= mainList[instLine]
-    # now just need to execute the instruction as done in normal case, just replicate from the for loop
+    memAdr = int(code[8:15])
+    return int(memAdr,2)
 
 
 def jlt():
-    pass
+    memAdr = int(code[8:15])
+    return int(memAdr,2)
+    
 
 def jgt():
-    pass
-
+    memAdr = int(code[8:15])
+    return int(memAdr,2)
+    
 def je():
-    pass
+    memAdr = int(code[8:15])
+    return int(memAdr,2)
 
 def hlt():
     halted = True
@@ -320,22 +323,22 @@ for code in mainList:
 
         compare(reg1,reg2)
     elif opc == "01111":
-        memAdr = int(code[8:15])
-        return int(memAdr,2)
+        uncjmp()
+
     elif opc == "10000":
 
-        if :
-            memAdr = int(code[8:15])
-            return int(memAdr,2)
+        if registers["111"][1] :
+            jlt()
         
     elif opc == "10001":
-        if:
-            memAdr = int(code[8:15])
-            return int(memAdr,2)
+        if registers["111"][2]:
+            jgt()
+
     elif opc == "10010":
-        if :
-            memAdr = int(code[8:15])
-            return int(memAdr,2)
+        if registers["111"][3]:
+            je()
+
+            
     elif opc == "10011":
         hlt()
 
