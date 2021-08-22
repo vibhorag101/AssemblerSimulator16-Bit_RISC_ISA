@@ -117,11 +117,13 @@ def movreg(reg1,reg2):
 
 def ld(reg1,memory):
     r1= varList[memory]
+    registers[reg1]=r1
 
 
 
 def st(reg1,memory):
     varList[memory]= registers[reg1]
+    
 
 
 
@@ -343,12 +345,11 @@ dumpCounter = 0
 for i in mainList:
     memoryList.append(i)
     dumpCounter = dumpCounter + 1
-
 dictItems = varList.items()
 varList= sorted(dictItems)
 if(len(varList)>0):
     for i in varList:
-        memoryList.append(varList[i][1])
+        memoryList.append(i[1])
         dumpCounter = dumpCounter + 1
 
 extraLines = 256 - dumpCounter
