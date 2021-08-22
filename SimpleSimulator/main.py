@@ -227,8 +227,13 @@ for commandInput in stdin:
         break
 
 lineCounter =0
-for code in mainList:
+
+i = 0
+while i <= mainList.length:
+    code = mainList[i]
+
     opc = code[0:5]
+
 
     if opc == "00000" :
         reg1 = code[7:10]
@@ -236,6 +241,7 @@ for code in mainList:
         reg3 = code[13:]
 
         add(reg1,reg2,reg3)
+        i = i+1
 
     elif opc == "00001":
         reg1 = code[7:10]
@@ -243,33 +249,45 @@ for code in mainList:
         reg3 = code[13:]
 
         sub(reg1,reg2,reg3)
+        i = i+1
 
     elif opc == "00010":
         reg1 = code[5:8]
         imm = "00000000" + code[8:]
         movimm(reg1,imm)
+        i = i+1
+
 
     elif opc == "00011":
         reg1 = code[10:13]
         reg2 = code[13:]
 
         movreg(reg1,reg2)
+        i = i+1
+
 
     elif opc == "00100":
         reg1 = code[5:8]
         memoryVar = code[8:]
         ld(reg1,memoryVar)
+        i = i+1
+
 
     elif opc == "00101":
         reg1 = code[5:8]
         memoryVar = code[8:]
         st(reg1,memoryVar)
+        i = i+1
+
     elif opc == "00110":
         reg1 = code[7:10]
         reg2 = code[10:13]
         reg3 = code[13:]
 
         mul(reg1,reg2,reg3)
+
+        i = i+1
+
 
     elif opc == "00111":
         reg1 = code[7:10]
@@ -278,17 +296,24 @@ for code in mainList:
 
         div(reg1,reg2,reg3)
 
+        i = i+1
+
+
     elif opc == "01000":
         reg1 = code[5:8]
         imm = "00000000" + code[8:]
 
         rtsf(reg1,imm)
+        i = i+1
+
 
     elif opc == "01001":
         reg1 = code[5:8]
         imm = "00000000" + code[8:]
 
         ltsf(reg1,imm)
+        i = i+1
+
 
     elif opc == "01010":
         reg1 = code[7:10]
@@ -296,6 +321,8 @@ for code in mainList:
         reg3 = code[13:]
 
         xor(reg1,reg2,reg3)
+        i = i+1
+
 
     elif opc == "01011":
         reg1 = code[7:10]
@@ -303,6 +330,8 @@ for code in mainList:
         reg3 = code[13:]
 
         oor(reg1,reg2,reg3)
+        i = i+1
+
 
     elif opc == "01100":
         reg1 = code[7:10]
@@ -310,35 +339,50 @@ for code in mainList:
         reg3 = code[13:]
 
         aand(reg1,reg2,reg3)
+        i = i+1
+
 
     elif opc == "01101":
         reg1 = code[10:13]
         reg2 = code[13:]
 
         invert(reg1,reg2)
+        i = i+1
+
 
     elif opc == "01110":
         reg1 = code[10:13]
         reg2 = code[13:]
 
         compare(reg1,reg2)
+        i = i+1
+
     elif opc == "01111":
-        uncjmp()
+        i = uncjmp()
 
     elif opc == "10000":
 
         if registers["111"][1] :
-            jlt()
+            i = jlt()
+        else:
+            i = i+1
         
     elif opc == "10001":
         if registers["111"][2]:
-            jgt()
+            i = jgt()
+
+        else:
+            i = i+1
+
 
     elif opc == "10010":
         if registers["111"][3]:
-            je()
+            i = je()
 
-            
+        else:
+            i = i+1
+
+
     elif opc == "10011":
         hlt()
 
