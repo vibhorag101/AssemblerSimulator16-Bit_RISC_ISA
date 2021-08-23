@@ -58,7 +58,8 @@ def sub(r1, r2, r3):
     if(re1 < 0):
         re1 = 0
         registers["111"][0] = "1"
-    elif(re1 > 65535):
+        overFlowFlag = True
+    elif(re1 >= 65535):
         registers["111"][0] = "1"
         overFlowFlag = True
 
@@ -95,6 +96,7 @@ def mul(r1, r2, r3):
     if(overFlowFlag):
         takeOverFlow = len(binR1)-16
         binR1 = binR1[takeOverFlow:]
+        registers["111"]= ["1", "0", "0", "0"]
     else:
         registers["111"]= ["0", "0", "0", "0"]
 
@@ -134,7 +136,10 @@ def movreg(reg1, reg2):
 
 
 def ld(reg1, memory):
-    r1 = varList[memory]
+    try:
+        r1 = varList[memory]
+    except:
+        r1="0000000000000000"
     registers[reg1] = r1
     registers["111"]= ["0", "0", "0", "0"]
 
@@ -146,7 +151,7 @@ def st(reg1, memory):
 
 def rtsf(reg1, imm):
     n = int(imm, 2)
-    re1 = int(reg1, 2)
+    re1 = int(registers[reg1], 2)
     re1 = re1 >> n
     binR1 = bin(re1)[2:]
     registers[reg1] = binR1.zfill(16)
@@ -155,7 +160,7 @@ def rtsf(reg1, imm):
 
 def ltsf(reg1, imm):
     n = int(imm, 2)
-    re1 = int(reg1, 2)
+    re1 = int(registers[reg1], 2)
     re1 = re1 << n
     binR1 = bin(re1)[2:]
     registers[reg1] = binR1.zfill(16)
@@ -163,9 +168,9 @@ def ltsf(reg1, imm):
 
 
 def xor(reg1, reg2, reg3):
-    re1 = int(reg1, 2)
-    re2 = int(reg2, 2)
-    re3 = int(reg3, 2)
+    re1 = int(registers[reg1], 2)
+    re2 = int(registers[reg2], 2)
+    re3 = int(registers[reg3], 2)
 
     re1 = re2 ^ re3
 
@@ -175,9 +180,9 @@ def xor(reg1, reg2, reg3):
 
 
 def oor(reg1, reg2, reg3):
-    re1 = int(reg1, 2)
-    re2 = int(reg2, 2)
-    re3 = int(reg3, 2)
+    re1 = int(registers[reg1], 2)
+    re2 = int(registers[reg2], 2)
+    re3 = int(registers[reg3], 2)
 
     re1 = re2 | re3
 
@@ -187,9 +192,9 @@ def oor(reg1, reg2, reg3):
 
 
 def aand(reg1, reg2, reg3):
-    re1 = int(reg1, 2)
-    re2 = int(reg2, 2)
-    re3 = int(reg3, 2)
+    re1 = int(registers[reg1], 2)
+    re2 = int(registers[reg2], 2)
+    re3 = int(registers[reg3], 2)
 
     re1 = re2 & re3
 
@@ -203,7 +208,7 @@ def aand(reg1, reg2, reg3):
 
 def invert(reg1, reg2):
     temp = ""
-    for i in reg2:
+    for i in registers[reg2]:
         if(i == "0"):
             temp = temp+"1"
         else:
@@ -226,25 +231,25 @@ def compare(r1, r2):
 
 
 def uncjmp():
-    memAdr = code[8:15]
+    memAdr = code[8:16]
     registers["111"]= ["0", "0", "0", "0"]
     return int(memAdr, 2)
 
 
 def jlt():
-    memAdr = code[8:15]
+    memAdr = code[8:16]
     registers["111"]= ["0", "0", "0", "0"]
     return int(memAdr, 2)
 
 
 def jgt():
-    memAdr = code[8:15]
+    memAdr = code[8:16]
     registers["111"]= ["0", "0", "0", "0"]
     return int(memAdr, 2)
 
 
 def je():
-    memAdr = code[8:15]
+    memAdr = code[8:16]
     registers["111"]= ["0", "0", "0", "0"]
     return int(memAdr, 2)
 
@@ -322,10 +327,10 @@ while i <= (len(mainList)-1):
         i = i+1
 
     elif opc == "00111":
-        reg1 = code[7:10]
-        reg2 = code[10:13]
+        reg1 = code[10:13]
+        reg2 = code[13:16]
 
-        div(reg1, reg2, reg3)
+        div(reg1, reg2)
 
         i = i+1
 
