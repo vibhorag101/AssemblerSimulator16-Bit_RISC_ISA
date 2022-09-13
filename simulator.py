@@ -258,8 +258,16 @@ def hlt():
     registers["111"]= ["0", "0", "0", "0"]
     halted = True
 
+contents = []
+while True:
+    line = input()
+    if(line == ""):
+        break
+    else:
+        contents.append(line)
+  
 
-for commandInput in stdin:
+for commandInput in contents:
     if(commandInput != ""):
         commandInput = commandInput.strip()
         if(commandInput == ""):
