@@ -1,4 +1,4 @@
-# CO assignment by Vibhor Agarwal, Tejdeep Chippa and Pranav Bhaskar
+
 # Description: This program is a simple 16bit assembler.
 from sys import stdin
 """
@@ -512,8 +512,16 @@ Since we are using split function extra white space in beginning
 are ignored and the input is splitted into a list
 the whole logic would be put in this while loop
 """
+contents = []
+while True:
+    line = input()
+    if(line == ""):
+        break
+    else:
+        contents.append(line)
+  
 
-for commandInput in stdin:
+for commandInput in contents:
     if(commandInput != ""):
         commandInput = commandInput.strip()
         if(commandInput == ""):
@@ -524,7 +532,7 @@ for commandInput in stdin:
             if(command[0][-1] == ":"):
                 labelDict[command[0][:-1]] = lineCounter
             lineCounter += 1
-    else:
+    elif(commandInput == "br"):
         break
 # REVIEW
 """
